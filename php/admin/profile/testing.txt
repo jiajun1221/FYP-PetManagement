@@ -1,0 +1,9 @@
+Array
+(
+    [customerName] => Chua Chee Long
+    [gender] => Male
+    [email] => chuacl1224@gmail.com
+    [contact] => 0123456789
+    [address] => No 22, Jalan Tombak 6
+    [query] => UPDATE customer SET customerName='Chua Chee Long',gender='Male',email='chuacl1224@gmail.com', contact = '0123456789', address = 'No 22, Jalan Tombak 6' WHERE customerID = '3' 
+)
