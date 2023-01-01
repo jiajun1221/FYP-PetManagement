@@ -2,48 +2,79 @@
 
 include '../../connect.php';
 if (isset($_POST['update'])) {
-    $productID= $_POST['productID'];
-    $productName = $_POST['productName'];
-    $productType = $_POST['productType'];
-    $price = $_POST['price'];
+    $itemID = $_GET['edit'];
+    $itemName = $_POST['itemName'];
+    $itemType = $_POST['itemType'];
     $quantity = $_POST['quantity'];
-    $mediaID = $_POST['mediaID'];
-    mysqli_query($connect, "UPDATE product SET productName='$productName', productType='$productType', price = '$price', quantity = '$quantity', mediaID = '$mediaID' WHERE productID = '$productID' ")
-        or die($mysqli->error);
+    $expiryDate = $_POST['expiryDate'];
+    $label = $_POST['label'];
+    $cost = $_POST['cost'];
+    $unitprice = $_POST['unitprice'];
+    $image =  $_FILES["image"]["name"];
+    mysqli_query($connect, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', cost = '$cost', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
+        or die($connect->error);
 
-    $_SESSION['message']="Record has been Saved!";
-    $_SESSION['msg_type']="success";
+    $target_dir = "../../../app-assets/img/product/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    header('location:viewProduct.php');
+
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+
+
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        $error = "Sorry, file already exists.";
+        $uploadOk = 0;
     }
 
-    if(isset($_GET['edit'])){
-        $productID = $_GET['edit'];
-        $result = mysqli_query($connect,"SELECT * FROM product WHERE productID=$productID");
-        unset($_GET['edit']);
-         $row = $result ->fetch_array();
-            $productName = $row['productName'];
-            $productType = $row['productType'];
-            $price = $row['price'];
-            $quantity = $row['quantity'];
-            $media = $row['mediaID'];
-        
-        
-        $_SESSION['message']="Record has been Saved";
-        $_SESSION['msg_type']="success";
+    // Check file size
+    if ($_FILES["image"]["size"] > 500000) {
+        $error = "Sorry, your file is too large.";
+        $uploadOk = 0;
     }
-    
 
-//pre_r($result);
-//pre_r($result->fetch_assoc());
+    // Allow certain file formats
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        $error = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
 
-function pre_r($array)
-{
-echo '<pre>';
-print_r($array);
-echo '</pre>';
+    $fp = fopen("testing.txt", "w");
+    $write["target_file"] = $target_file;
+    $write["move_uploaded_file"] =  $_FILES["image"]["tmp_name"];
+    fwrite($fp, print_r($write, true));
+    fclose($fp);
+
+    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+    $_SESSION['message'] = "Record has been Saved!";
+    $_SESSION['msg_type'] = "success";
+
+    header('location:inventory.php');
 }
 
+if (isset($_GET['edit'])) {
+    $itemID = $_GET['edit'];
+    $result = mysqli_query($connect, "SELECT * FROM inventory WHERE itemID=$itemID");
+    unset($_GET['edit']);
+    $row = $result->fetch_array();
+    $itemName = $row['itemName'];
+    $itemType = $row['itemType'];
+    $quantity = $row['quantity'];
+    $expiryDate = $row['expiryDate'];
+    $label = $row['label'];
+    $cost = $row['cost'];
+    $unitprice = $row['unitprice'];
+
+    $_SESSION['message'] = "Record has been Saved";
+    $_SESSION['msg_type'] = "success";
+}
+
+$result = mysqli_query($connect, "SELECT * FROM  category")
+    or die($mysqli->error);
 
 include '../header.php';
 ?>
@@ -57,14 +88,14 @@ include '../header.php';
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Product Page</h2>
+                        <h2 class="content-header-title float-left mb-0">Inventory Page</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="index.html">Stock</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Product</a>
+                                <li class="breadcrumb-item"><a href="#">Item</a>
                                 </li>
-                                <li class="breadcrumb-item active">Edit Product</a>
+                                <li class="breadcrumb-item active">Edit Item</a>
                                 </li>
                             </ol>
                         </div>
@@ -87,19 +118,19 @@ include '../header.php';
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Edit Product</h4>
+                                <h4 class="card-title">Add Item</h4>
                             </div>
+
                             <div class="card-body">
-                                <form class="form form-horizontal" method="POST">
-                                    <div class="row">    
-                                        <div class="col-12">
+                                <form class="form form-horizontal" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-12"><br>
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="productName">Product Name</label>
+                                                    <label for="itemName">Item Name</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="hidden" name="productID" value="<?php echo $productID;?>">
-                                                    <input type="text" id="productName" class="form-control" name="productName" value="<?php echo $productName;?>">
+                                                    <input type="text" id="itemName" class="form-control" name="itemName" value="<?php echo $itemName ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -107,48 +138,85 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="category">Category</label>
+                                                    <label for="category">Item Type</label>
                                                 </div>
                                                 <div class="col-sm-9 col-form-label">
-                                                    <select id="productType" name="productType" value="<?php echo $categoryName;?>">
-                                                    <?php while ($row = $result->fetch_assoc()) :?>
-                                                    <option value="<?php echo $row['categoryID'] ?>">
-                                                    <?php echo $row['categoryName']?></option>                                                       
-                                                    <?php endwhile;?>
-                                                </select>
+                                                    <select id="itemType" name="itemType">
+                                                        <?php while ($row = $result->fetch_assoc()) : ?>
+                                                            <option value="<?php echo $row['categoryID'] ?>">
+                                                                <?php echo $row['categoryName'] ?></option>
+                                                        <?php endwhile; ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="price">Price</label>
+                                                    <label for="unitprice">Unit Price</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="price" id="price" class="form-control" name="price" value="<?php echo $price;?>">
+                                                    <input type="unitprice" id="unitprice" class="form-control" name="unitprice" value="<?php echo $unitprice ?>" />
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
                                                     <label for="quantity">Quantity</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="quantity" id="quantity" class="form-control" name="quantity" value="<?php echo $quantity;?>">
+                                                    <input type="quantity" id="quantity" class="form-control" name="quantity" value="<?php echo $quantity ?>" />
                                                 </div>
                                             </div>
                                         </div>
+
+
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="mediaID">Images</label>
+                                                    <label for="expiryDate">Expiry Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="file" class="form-control" id="mediaID" name="mediaID" >
+                                                    <input name="expiryDate" id="datefield" type='date' min='1899-01-01' max='2000-13-13' value="<?php echo $expiryDate ?>"></input>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="label">Label</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="label" id="label" class="form-control" name="label" value="<?php echo $label ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="cost">Cost</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="cost" id="cost" class="form-control" name="cost" value="<?php echo $cost ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="image">Images</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="file" class="form-control" id="image" name="image" accept="image/jpg, image/png, image/gif, image/jpeg">
+                                                </div>
+                                            </div>
+                                        </div> -->
 
 
                                         <div class="col-sm-9 offset-sm-3">
@@ -156,7 +224,8 @@ include '../header.php';
                                             </div>
                                         </div>
                                         <div class="col-sm-9 offset-sm-3">
-                                            <button name="update" type="update" class="btn btn-primary mr-1"style="float:right">Update</button>
+                                            <button name="update" type="submit" class="btn btn-primary mr-1">Update</button>
+                                            <a href="viewProduct.php"><button name="back" type="button" class="btn btn-primary mr-1">Back</button></a>
                                         </div>
                                     </div>
                                 </form>
@@ -176,7 +245,7 @@ include '../header.php';
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

@@ -1,0 +1,32 @@
+Array
+(
+    [update] => Array
+        (
+            [petID] => 3
+            [birthdate] => 2018-01-10
+            [gender] => Female
+            [species] => Bobtail
+            [color] => White
+            [weight] => 4
+            [owner] => 6
+            [status] => Healthy
+            [remark] => Healthy
+            [update] => 
+        )
+
+    [query] => UPDATE pet SET status='Healthy', remark='Healthy' WHERE petID = '3'
+    [status] => Array
+        (
+            [petID] => 3
+            [birthdate] => 2018-01-10
+            [gender] => Female
+            [species] => Bobtail
+            [color] => White
+            [weight] => 4
+            [owner] => 6
+            [status] => Healthy
+            [remark] => Healthy
+            [update] => 
+        )
+
+)

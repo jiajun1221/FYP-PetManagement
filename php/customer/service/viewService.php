@@ -1,7 +1,7 @@
 <?php
 
 include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "riken") or die(mysqli_error($mysqli));
+$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
 
 if (isset($_GET['delete'])) {

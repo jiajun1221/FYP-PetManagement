@@ -1,19 +1,19 @@
 <?php
 
 include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "riken") or die(mysqli_error($mysqli));
+$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM `order` WHERE orderID=$id");
+    mysqli_query($connect, "DELETE FROM `pet` WHERE petID=$id");
     unset($_GET['delete']);
 
     $_SESSION['message'] = "Record has been Deleted";
     $_SESSION['msg_type'] = "danger";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM `order`")
+$result = mysqli_query($connect, "SELECT * FROM `pet`")
     or die($mysqli->error);
 
 //pre_r($result);
@@ -38,7 +38,7 @@ function pre_r($array)
                     <div class="content-header-left col-md-9 col-12 mb-2" bis_skin_checked="1">
                         <div class="row breadcrumbs-top" bis_skin_checked="1">
                             <div class="col-12" bis_skin_checked="1">
-                                <h2 class="content-header-title float-left mb-0">Profile</h2>
+                                <h2 class="content-header-title float-left mb-0">Pet Profile</h2>
 
                             </div>
                         </div>
@@ -65,7 +65,7 @@ function pre_r($array)
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addService.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
+                                                <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addPet.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
                                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                                                 </svg>Add New Record</span></button></a>
@@ -76,12 +76,12 @@ function pre_r($array)
                                             <thead>
                                                 <tr role="row">
                                                     <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 114px;" aria-label="Name: activate to sort column ascending">Service ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;" aria-label="Email: activate to sort column ascending">Customer ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;" aria-label="Date: activate to sort column ascending">Purchase Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 137px;" aria-label="Salary: activate to sort column ascending">Service Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Install Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">totalPrice</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 50px;" aria-label="Name: activate to sort column ascending">Pet ID</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 90px;" aria-label="Email: activate to sort column ascending">Pet Name</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Date: activate to sort column ascending">Gender</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Salary: activate to sort column ascending">Species</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 154px;" aria-label="Status: activate to sort column ascending">Status</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 200px;" aria-label="Status: activate to sort column ascending">Remark</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Action</th>
                                                 </tr>
                                             </thead>
@@ -90,16 +90,16 @@ function pre_r($array)
                                                 while ($user_info = $result->fetch_assoc()) : {
                                                 ?>
                                                         <tr>
-                                                            <td><?php echo $user_info['orderID']; ?></td>
-                                                            <td><?php echo $user_info['userID']; ?></td>
-                                                            <td><?php echo $user_info['purchaseDate']; ?></td>
-                                                            <td><?php echo $user_info['serviceDate']; ?></td>
-                                                            <td><?php echo $user_info['installDate']; ?></td>
-                                                            <td><?php echo $user_info['totalPrice']; ?></td>
-                                                            <td><a href="editOrder.php?edit=<?php echo $row['orderID']; ?>">
-                                                                    <button class="btn-primary">Edit</button></a>
-                                                                <a href="viewOrder.php?delete=<?php echo $row['orderID']; ?>">
-                                                                    <button class="btn-outline-secondary">Delete</button></a>
+                                                            <td><?php echo $user_info['petID']; ?></td>
+                                                            <td><?php echo $user_info['petName']; ?></td>
+                                                            <td><?php echo $user_info['gender']; ?></td>
+                                                            <td><?php echo $user_info['species']; ?></td>
+                                                            <td><?php echo $user_info['status']; ?></td>
+                                                            <td><?php echo $user_info['remark']; ?></td>
+                                                            <td>
+                                                                <a href="updatePet.php?edit=<?php echo $user_info['petID']; ?>">
+                                                                    <button class="btn-primary">Update</button></a>
+                                                                
                                                             </td>
                                                         </tr>
                                                 <?php
@@ -109,7 +109,7 @@ function pre_r($array)
                                         </table>
                                         <div class="d-flex justify-content-between mx-0 row" bis_skin_checked="1">
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" bis_skin_checked="1">Showing 0 to 0 of 0 entries</div>
+                                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" bis_skin_checked="1"></div>
                                             </div>
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
                                                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate" bis_skin_checked="1">
@@ -139,7 +139,7 @@ function pre_r($array)
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+   
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

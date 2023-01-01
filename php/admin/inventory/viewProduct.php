@@ -4,7 +4,7 @@ include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM product WHERE productID=$id");
+    mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
     unset($_GET['delete']);
 
     $_SESSION['message'] = "Record has been Deleted";
@@ -12,7 +12,7 @@ if (isset($_GET['delete'])) {
 }
 
 
-$result = mysqli_query($connect, "SELECT * FROM product")
+$result = mysqli_query($connect, "SELECT * FROM inventory")
     or die($mysqli->error);
 
 
@@ -40,7 +40,7 @@ function pre_r($array)
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="row breadcrumbs-top">
                             <div class="col-12">
-                                <h2 class="content-header-title float-left mb-0">Product Page</h2>
+                                <h2 class="content-header-title float-left mb-0">Inventory Page</h2>
                                 <div class="breadcrumb-wrapper">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="index.html">Inventory</a>
@@ -74,7 +74,7 @@ function pre_r($array)
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addService.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
+                                                <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addProduct.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
                                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                                                 </svg>Add New Record</span></button></a>
@@ -85,31 +85,36 @@ function pre_r($array)
                                             <thead>
                                                 <tr role="row">
                                                     <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 114px;">ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Name</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Category</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 137px;">price</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;">quantity</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;">Action</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Item ID</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Name</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Type</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Quantity</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Expiry Date</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">Cost</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Unit Price</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                while ($row = $result->fetch_assoc()) :
-                                                    $categoryID = $row['productType'];
+                                                while ($user_info = $result->fetch_assoc()) :
+                                                    $categoryID = $user_info['itemType'];
                                                     $result2 = mysqli_query($connect, "SELECT * FROM category WHERE categoryID ='$categoryID'");
                                                 ?>
                                                     <tr>
-                                                        <td><?php echo $row['productID']; ?></td>
-                                                        <td><?php echo $row['productName']; ?></td>
-                                                        <td><?php while ($row2 = $result2->fetch_assoc()) {
-                                                                echo $row2['categoryName'];
+                                                        <td><?php echo $user_info['itemID']; ?></td>
+                                                        <td><?php echo $user_info['itemName']; ?></td>
+                                                        <td><?php while ($user_info2 = $result2->fetch_assoc()) {
+                                                                echo $user_info2['categoryName'];
                                                             } ?></td>
-                                                        <td><?php echo $row['price']; ?></td>
-                                                        <td><?php echo $row['quantity']; ?></td>
-                                                        <td><a href="editProduct.php?edit=<?php echo $row['productID']; ?>">
+                                                        <td><?php echo $user_info['quantity']; ?></td>
+                                                        <td><?php echo $user_info['expiryDate']; ?></td>
+                                                        <td><?php echo $user_info['cost']; ?></td>
+                                                        <td><?php echo $user_info['unitprice']; ?></td>
+
+                                                        <td><a href="editProduct.php?edit=<?php echo $user_info['itemID']; ?>">
                                                                 <button class="btn-primary">Edit</button></a>
-                                                            <a href="viewProduct.php?delete=<?php echo $row['productID']; ?>">
+                                                            <a href="viewProduct.php?delete=<?php echo $user_info['itemID']; ?>">
                                                                 <button class="btn-outline-secondary">Delete</button></a>
                                                         </td>
                                                     </tr>
@@ -123,13 +128,12 @@ function pre_r($array)
 
                                             <div class="col-sm-12 col-md-6">
 
-                                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div>
+                                                
                                             </div>
                                             <div class="col-sm-12 col-md-6">
                                                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                                                     <ul class="pagination">
-                                                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a></li>
-                                                        <li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">&nbsp;</a></li>
+                                                       
                                                     </ul>
                                                 </div>
                                             </div>
@@ -152,7 +156,7 @@ function pre_r($array)
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

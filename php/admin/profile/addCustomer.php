@@ -3,29 +3,28 @@
 include '../../connect.php';
 
 if (isset($_POST['submit'])) {
-    // $customerID = $_POST['customerID'];
     $customerName = $_POST['customerName'];
     $gender = $_POST['gender'];
     $email = $_POST['email'];
     $contact = $_POST['contact'];
     $address = $_POST['address'];
 
-    
+    mysqli_query($connect, "INSERT INTO customer(customerName,gender,email,contact,address) VALUES('$customerName','$gender','$email','$contact','$address')");
 
-    mysqli_query($connect, "INSERT INTO `customer`(customerName,gender,email,contact,address) VALUES('$customerName','$gender','$email','$contact','$address')") or die(mysqli_error($connect)); 
-    // $fp = fopen("testing.txt","w");
-    // $write["customerID"] = $customerID;
-    // $write["customerName"] = $customerName;
-    // $write["gender"] = $gender;
-    // $write["email"] = $email;
-    // $write["contact"] = $contact;
-    // $write["address"] = $address;
-    // $write["query"] = "INSERT INTO `customer`(customerID,customerName,gender,email,contact,address) VALUES('$customerID','$customerName','$gender','$email','$contact','$address')";
-    // $write["connect"] = $connect;
-    // fwrite($fp,print_r($write,true));
-    // fclose($fp);
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "Success";
+?><script>
+        toastr['success']('New Record has been successfully added', 'Success!', {
+            closeButton: true,
+            tapToDismiss: false,
+            rtl: isRtl
+        });
+    </script>
+<?php
+    $fp = fopen("testing.txt", "w");
+    $write["userID"] = $_POST;
+    $write["error"] = mysqli_error($connect);
+    $write["query"] = "INSERT INTO `customer`(customerName,gender,email,contact,address) VALUES('$customerName',$gender','$email','$contact','$address')";
+    fwrite($fp, print_r($write, true));
+    fclose($fp);
 
     header('location:viewCustomer.php');
 }
@@ -36,7 +35,7 @@ include '../header.php';
 
 <!-- BEGIN: Content-->
 <div class="app-content content ">
-<div class="content-overlay"></div>
+    <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper">
         <div class="content-header row">
@@ -50,7 +49,7 @@ include '../header.php';
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Customer</a>
                                 </li>
-                                <li class="breadcrumb-item active">Add customer</a>
+                                <li class="breadcrumb-item active">Add Customer</a>
                                 </li>
                             </ol>
                         </div>
@@ -67,7 +66,7 @@ include '../header.php';
                             <div class="card-header">
                                 <h4 class="card-title">Add Customer</h4>
                             </div>
-                            <div class="card-body"><br> 
+                            <div class="card-body"><br>
                                 <form class="form form-horizontal" method="POST" action="addCustomer.php">
                                     <div class="row">
 
@@ -77,7 +76,7 @@ include '../header.php';
                                                     <label for="customerName">Customer Name</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="customerName" class="form-control" name="customerName" />
+                                                    <input type="text" id="customerName" class="form-control" placeholder="John Smith" name="customerName" />
                                                 </div>
                                             </div>
                                         </div>
@@ -90,7 +89,7 @@ include '../header.php';
                                                 <div class="col-sm-9">
                                                     <div class="demo-inline-spacing">
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="Male" >
+                                                            <input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="Male">
                                                             <label class="custom-control-label" for="customRadio1">Male</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
@@ -108,7 +107,7 @@ include '../header.php';
                                                     <label for="email">Email</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="email" class="form-control" name="email" />
+                                                    <input type="text" id="email" class="form-control" name="email" placeholder="john@example.com" />
                                                 </div>
                                             </div>
                                         </div>
@@ -119,7 +118,7 @@ include '../header.php';
                                                     <label for="contact">Contact</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="contact" class="form-control" name="contact" />
+                                                    <input type="text" id="contact" class="form-control" name="contact" placeholder="012-3456789" />
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +129,7 @@ include '../header.php';
                                                     <label for="address">Address</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="address" class="form-control" name="address" />
+                                                    <input type="text" id="address" class="form-control" name="address" placeholder="No 3,Jalan Dedap" />
                                                 </div>
                                             </div>
                                         </div>
@@ -142,6 +141,7 @@ include '../header.php';
                                         </div>
                                         <div class="col-sm-9 offset-sm-3">
                                             <button name="submit" type="submit" class="btn btn-primary mr-1">Submit</button>
+                                            <a href="viewCustomer.php"><button name="back" type="button" class="btn btn-primary mr-1">Back</button></a>
                                         </div>
                                     </div>
                                 </form>
@@ -161,7 +161,7 @@ include '../header.php';
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <!-- <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p> -->
+    <!--  -->
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

@@ -1,9 +1,14 @@
 Array
 (
-    [customerName] => Chua Chee Long
-    [gender] => Male
-    [email] => chuacl1224@gmail.com
-    [contact] => 0123456789
-    [address] => No 22, Jalan Tombak 6
-    [query] => UPDATE customer SET customerName='Chua Chee Long',gender='Male',email='chuacl1224@gmail.com', contact = '0123456789', address = 'No 22, Jalan Tombak 6' WHERE customerID = '3' 
+    [userID] => Array
+        (
+            [supplierName] => Coco&Joe Sdn Bhd
+            [contactName] => John
+            [contactNo] => 012-3456789
+            [address] => No 79 jalan perindustrian, Jalan Kasban 4/Ku8, kawasan perindustrian meru selatan, 41050 Klang, Selangor
+            [submit] => 
+        )
+
+    [error] => 
+    [query] => INSERT INTO `supplier`(supplierName,contactName,contactNo,address) VALUES('Coco&Joe Sdn Bhd',John','012-3456789','No 79 jalan perindustrian, Jalan Kasban 4/Ku8, kawasan perindustrian meru selatan, 41050 Klang, Selangor')
 )

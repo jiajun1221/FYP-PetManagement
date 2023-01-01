@@ -76,13 +76,14 @@ function pre_r($array)
                                             <thead>
                                                 <tr role="row">
                                                     <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 114px;" aria-label="Name: activate to sort column ascending">Pet ID</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;" aria-label="Name: activate to sort column ascending">Pet ID</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;" aria-label="Email: activate to sort column ascending">Pet Name</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;" aria-label="Email: activate to sort column ascending">Pet Type</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;" aria-label="Date: activate to sort column ascending">Gender</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 137px;" aria-label="Salary: activate to sort column ascending">Species</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Birth Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Color</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Weight(KG)</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Salary: activate to sort column ascending">Species</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Status: activate to sort column ascending">Birth Date</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Status: activate to sort column ascending">Owner ID</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Status: activate to sort column ascending">Weight(KG)</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Status: activate to sort column ascending">Action</th>
                                                 </tr>
                                             </thead>
@@ -93,10 +94,11 @@ function pre_r($array)
                                                         <tr>
                                                             <td><?php echo $user_info['petID']; ?></td>
                                                             <td><?php echo $user_info['petName']; ?></td>
+                                                            <td><?php echo $user_info['petType']; ?></td>
                                                             <td><?php echo $user_info['gender']; ?></td>
                                                             <td><?php echo $user_info['species']; ?></td>
                                                             <td><?php echo $user_info['birthdate']; ?></td>
-                                                            <td><?php echo $user_info['color']; ?></td>
+                                                            <td><?php echo $user_info['owner']; ?></td>
                                                             <td><?php echo $user_info['weight']; ?></td>
                                                             <td><a href="editPet.php?edit=<?php echo $user_info['petID']; ?>">
                                                                     <button class="btn-primary">Edit</button></a>
@@ -141,7 +143,7 @@ function pre_r($array)
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <!-- <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p> -->
+   
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

@@ -35,6 +35,12 @@
   --font-family-monospace : 'Montserrat', Helvetica, Arial, serif;
 }
 
+img.img-fluid.petpic {
+  max-height: 400px;
+  max-width: 300px;
+  border-radius: 6%;
+}
+
 *, *::before, *::after {
   box-sizing : border-box;
 }
@@ -142,6 +148,12 @@ sup {
   top : -0.5em;
 }
 
+th.sub {
+  min-width: 100px;
+  background-color: #00cfe8;
+  color: white;
+}
+
 a {
   color : #00cfe8;
   text-decoration : none;
@@ -184,6 +196,8 @@ img {
   border-style : none;
 }
 
+
+
 .searchicon {
   margin-left: 15px;
     height: 1.5rem;
@@ -191,6 +205,8 @@ img {
     font-size: 1.5rem;
     color: #6E6B7B;
 } 
+
+
 
 svg {
   overflow : hidden;

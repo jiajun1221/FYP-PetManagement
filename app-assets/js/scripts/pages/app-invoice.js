@@ -120,7 +120,7 @@ $(function () {
           .before(
             '<div class="add-new-customer btn btn-flat-success cursor-pointer rounded-0 text-left mb-50 p-50 w-100" data-toggle="modal" data-target="#add-new-customer-sidebar">' +
               feather.icons['plus'].toSvg({ class: 'font-medium-1 mr-50' }) +
-              '<span class="align-middle">Add New Customer</span></div>'
+              '<span class="align-middle">Add New Supplier</span></div>'
           );
       }
     });

@@ -1,0 +1,13 @@
+Array
+(
+    [itemID] => 15
+    [quantity] => 1
+    [query] => SELECT quantity FROM `inventory` WHERE itemID='15'
+    [current_quantity] => 21
+    [invoice] => Array
+        (
+            [itemName] => 15
+            [quantity] => 1
+        )
+
+)

@@ -14,6 +14,7 @@
   border-top : 1px solid #FFFFFF;
 }
 
+
 .border-bottom-white {
   border-bottom : 1px solid #FFFFFF;
 }
@@ -726,6 +727,9 @@ input:focus ~ .bg-light {
 .btn-primary {
   border-color : #00cfe8 !important;
   background-color : #00cfe8 !important;
+  color : #FFFFFF !important;
+}
+.white{
   color : #FFFFFF !important;
 }
 

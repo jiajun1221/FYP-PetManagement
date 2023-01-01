@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
+<?php session_start() ?>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +25,11 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../../../app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/form-number-input.js"></script>
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <!-- END: Page CSS-->
@@ -32,6 +37,7 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Custom CSS-->
+
 
 </head>
 <!-- END: Head-->
@@ -58,18 +64,18 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav align-items-center ml-auto">
-                <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon" data-feather="search"></i></a>
-                    <div class="search-input">
-                        <div class="search-input-icon"><i data-feather="search"></i></div>
-                        <input class="form-control input" type="text" placeholder="Explore Vuexy..." tabindex="-1" data-search="search">
-                        <div class="search-input-close"><i data-feather="x"></i></div>
-                        <ul class="search-list search-list-main"></ul>
+
+                <li class="nav-item dropdown dropdown-user show"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder"><?php echo $_SESSION['userName'] ?></span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="../../../app-assets/img/user.png" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right show" aria-labelledby="dropdown-user"><a class="dropdown-item" href="../../authentication/authentication/login.php"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-50">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+
+                            </svg> Logout<a href=""></a>
                     </div>
                 </li>
-                <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="account.php" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">User</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="../../../app-assets/img/user.png" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
-                    </a>
-                </li>
+
             </ul>
         </div>
     </nav>
@@ -87,34 +93,50 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../account/account.php"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Chat">Account</span></a>
+                <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="../general/dashboard.php"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a> -->
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../general/account.php"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Account">Account</span></a>
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../index.html"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
-                    
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Chat">Profile</span></a>
+                    <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="../profile/viewStaff.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Staff</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../profile/viewSupplier.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Supplier</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../profile/viewCustomer.php"><i class="fa-solid fa-user"></i><span class="menu-item text-truncate" data-i18n="List">Customer</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../profile/viewPet.php"><i class="fa-solid fa-paw"></i><span class="menu-item text-truncate" data-i18n="Add">Pet</span></a>
+                        </li>
+
+                    </ul>
                 </li>
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file"></i><span class="menu-title text-truncate" data-i18n="Chat">Profile</span></a>
-                <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../profile/viewCustomer.php"><i data-feather="user"></i><span class="menu-item text-truncate" data-i18n="List">Customer</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../profile/viewPet.php"><i data-feather="gitlab"></i><span class="menu-item text-truncate" data-i18n="Add">Pet</span></a>
-                        </li>
-                        
-                    </ul>
-                </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../service/viewService.php"><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Categories">Services</span></a>
                 
-                </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../appointment/viewAppointment.php"><i data-feather="clock"></i><span class="menu-title text-truncate" data-i18n="Product">Appointment</span></a>
+
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../service/viewService.php"><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Categories">Services</span></a>
                     
                 </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../appointment/viewAppointment.php"><i class="fa-solid fa-calendar-days"></i><span class="menu-title text-truncate" data-i18n="Product">Appointment</span></a>
 
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="archive"></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
+                </li>
+
+
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-box-open"></i></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../inventory/viewProduct.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Product</span></a>
+                        <li><a class="d-flex align-items-center" href="../inventory/viewProduct.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Stock</span></a>
                         </li>
-                        <li><a class="d-flex align-items-center" href="../inventory/viewOrder.php"><i data-feather="clipboard"></i><span class="menu-item text-truncate" data-i18n="Add">Order</span></a>
+                        <li><a class="d-flex align-items-center" href="../inventory/inventory.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Truttle Stock</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../inventory/category.php"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">Category</span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-clipboard-list"></i><span class="menu-title text-truncate" data-i18n="Todo">Order</span></a>
+                    <ul class="menu-content">
+                        <li><a class="d-flex align-items-center" href="../order/do_list.php"><i class="fa-solid fa-parachute-box"></i><span class="menu-item text-truncate" data-i18n="List">Delivery Order</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../order/po_list.php"><i class="fa-solid fa-parachute-box"></i><span class="menu-item text-truncate" data-i18n="List">Purchase Order</span></a>
                         </li>
                     </ul>
                 </li>
@@ -128,6 +150,7 @@
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->

@@ -9,16 +9,6 @@ if (isset($_POST['update'])) {
     $contact = $_POST['contact'];
     $address = $_POST['address'];
 
-    // $fp = fopen("testing.txt","w");
-    // $write["customerName"] = $customerName;
-    // $write["gender"] = $gender;
-    // $write["email"] = $email;
-    // $write["contact"] = $contact;
-    // $write["address"] = $address;
-    // $write["query"] = "UPDATE customer SET customerName='$customerName',gender='$gender',email='$email', contact = '$contact', address = '$address' WHERE customerID = '$customerID' ";
-    // fwrite($fp,print_r($write,true));
-    // fclose($fp);
-
     mysqli_query($connect, "UPDATE customer SET customerName='$customerName',gender='$gender',email='$email', contact = '$contact', address = '$address' WHERE customerID = '$customerID' ")
         or die($connect->error);
 
@@ -30,7 +20,7 @@ if (isset($_POST['update'])) {
 
 if (isset($_GET['edit'])) {
     $customerID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM customer WHERE customerID=$customerID");
+    $result = mysqli_query($connect, "SELECT * FROM customer WHERE customerID='$customerID'");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $customerName = $row['customerName'];
@@ -99,7 +89,7 @@ include '../header.php';
                                                     <label for="customerName">Customer Name</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="customerName" class="form-control" name="customerName" value="<?php echo $customerName ?>"/>
+                                                    <input type="text" id="customerName" class="form-control" name="customerName" value="<?php echo $customerName ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -112,11 +102,11 @@ include '../header.php';
                                                 <div class="col-sm-9">
                                                     <div class="demo-inline-spacing">
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="Male" <?php if ($gender=="Male") echo "selected" ?>>
+                                                            <input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="Male" <?php if ($gender == "Male") echo "selected" ?>>
                                                             <label class="custom-control-label" for="customRadio1">Male</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="Female" <?php if ($gender=="Female") echo "selected" ?>>
+                                                            <input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="Female" <?php if ($gender == "Female") echo "selected" ?>>
                                                             <label class="custom-control-label" for="customRadio2">Female</label>
                                                         </div>
                                                     </div>
@@ -130,7 +120,7 @@ include '../header.php';
                                                     <label for="email">Email</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="email" class="form-control" name="email" value="<?php echo $email ?>"/>
+                                                    <input type="text" id="email" class="form-control" name="email" value="<?php echo $email ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -152,7 +142,7 @@ include '../header.php';
                                                     <label for="address">Address</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="address" class="form-control" name="address" value="<?php echo $address ?>"/>
+                                                    <input type="text" id="address" class="form-control" name="address" value="<?php echo $address ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -163,6 +153,7 @@ include '../header.php';
                                         </div>
                                         <div class="col-sm-9 offset-sm-3">
                                             <button name="update" type="submit" class="btn btn-primary mr-1">Update</button>
+                                            <a href="viewCustomer.php"><button name="back" type="button" class="btn btn-primary mr-1">Back</button></a>
                                         </div>
                                     </div>
                                 </form>
@@ -184,7 +175,7 @@ include '../header.php';
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <!-- <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p> -->
+    <!--  -->
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->

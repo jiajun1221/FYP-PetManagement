@@ -1,0 +1,20 @@
+Array
+(
+    [post] => Array
+        (
+            [userEmail] => kevenchng1221@gmail.com
+            [password] => 12345
+            [signin] => 
+        )
+
+    [query] => SELECT * FROM user WHERE userEmail='kevenchng1221@gmail.com' AND password='MTIzNDU='
+    [result] => mysqli_result Object
+        (
+            [current_field] => 0
+            [field_count] => 8
+            [lengths] => 
+            [num_rows] => 1
+            [type] => 0
+        )
+
+)
