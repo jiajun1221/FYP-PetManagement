@@ -7,12 +7,13 @@ if (isset($_POST['submit1'])) {
     $itemName = $_POST['itemName'];
     $itemType = $_POST['itemType'];
     $quantity = $_POST['quantity'];
+    $supplier = $_POST['supplier'];
     $expiryDate = $_POST['expiryDate'];
     $label = $_POST['label'];
-    $cost = $_POST['cost'];
+    $sellingPrice = $_POST['sellingPrice'];
     $unitprice = $_POST['unitprice'];
     $image =  $_FILES["image"]["name"];
-    mysqli_query($connect, "INSERT INTO inventory(itemID,itemName,itemType,quantity,expiryDate,label,cost,unitprice,image) VALUES('$itemID','$itemName','$itemType','$quantity','$expiryDate','$label','$cost','$unitprice','$image')")
+    mysqli_query($connect, "INSERT INTO inventory(itemID,itemName,itemType,quantity,supplier,expiryDate,label,sellingPrice,unitprice,image) VALUES('$itemID','$itemName','$itemType','$quantity','$supplier','$expiryDate','$label','$sellingPrice','$unitprice','$image')")
         or die($mysqli->error);
 
     $target_dir = "../../../app-assets/img/product/";
@@ -54,11 +55,14 @@ if (isset($_POST['submit1'])) {
     $_SESSION['message'] = "Record has been Saved!";
     $_SESSION['msg_type'] = "success";
 
-    header('location:viewProduct.php');
+    header('location:inventory.php');
 }
 
 
 $result = mysqli_query($connect, "SELECT * FROM  category")
+    or die($mysqli->error);
+
+    $result2 = mysqli_query($connect, "SELECT * FROM  supplier")
     or die($mysqli->error);
 
 //pre_r($result);
@@ -76,10 +80,10 @@ include '../header.php';
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Stock Page</h2>
+                        <h2 class="content-header-title float-left mb-0">Add Inventory</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Stock</a>
+                                <li class="breadcrumb-item"><a href="index.html">Inventory</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Item</a>
                                 </li>
@@ -142,10 +146,37 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
+                                                    <label for="supplier">Supplier</label>
+                                                </div>
+                                                <div class="col-sm-9 col-form-label">
+                                                    <select id="supplier" name="supplier">
+                                                        <?php while ($row = $result2->fetch_assoc()) : ?>
+                                                            <option value="<?php echo $row['supplierName'] ?>">
+                                                                <?php echo $row['supplierName'] ?></option>
+                                                        <?php endwhile; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
                                                     <label for="unitprice">Unit Price</label>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <input type="unitprice" id="unitprice" class="form-control" name="unitprice" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="sellingPrice">sellingPrice</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="sellingPrice" id="sellingPrice" class="form-control" name="sellingPrice" />
                                                 </div>
                                             </div>
                                         </div>
@@ -161,7 +192,7 @@ include '../header.php';
                                             </div>
                                         </div>
 
-
+                                        
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
@@ -184,16 +215,7 @@ include '../header.php';
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="cost">Cost</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="cost" id="cost" class="form-control" name="cost" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
 
                                         <!-- <div class="col-12">
                                             <div class="form-group row">

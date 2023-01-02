@@ -123,9 +123,7 @@
 
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-box-open"></i></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../inventory/viewProduct.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Stock</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../inventory/inventory.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Truttle Stock</span></a>
+                        <li><a class="d-flex align-items-center" href="../inventory/inventory.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Stock</span></a>
                         </li>
                         <li><a class="d-flex align-items-center" href="../inventory/category.php"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">Category</span></a>
                         </li>

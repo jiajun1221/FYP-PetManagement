@@ -75,7 +75,7 @@ function pre_r($array)
                                                     <br>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                    <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addDO.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
+                                                    <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addProduct.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
                                                                         <line x1="12" y1="5" x2="12" y2="19"></line>
                                                                         <line x1="5" y1="12" x2="19" y2="12"></line>
                                                                     </svg>Add New Item</span></button></a>
@@ -90,10 +90,11 @@ function pre_r($array)
                                                         <th scope="col">#</th>
                                                         <th scope="col">Product name</th>
                                                         <th scope="col">Item type</th>
-                                                        <th scope="col">Expiry date</th>
+                                                        <!-- <th scope="col">Expiry date</th> -->
                                                         <th scope="col">Quantity</th>
-                                                        <th scope="col">Cost</th>
+                                                        <th scope="col">Supplier</th>
                                                         <th scope="col">Unit price</th>
+                                                        <th scope="col">Selling Price</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -117,11 +118,12 @@ function pre_r($array)
                                                         if ($category == $categoryID) {
                                                             $type = $categoryName;
                                                         }
-                                                        // $supplier = $row['supplier'];
                                                         $quantity = $row['quantity'];
-                                                        $date     = date("d/m/Y", strtotime($row["expiryDate"]));
-                                                        $cost     = $row['cost'];
+                                                        $supplier = $row['supplier'];
+                                                        // $date     = date("d/m/Y", strtotime($row["expiryDate"]));
                                                         $unitPrice = $row['unitprice'];
+                                                        $sellingPrice = $row['sellingPrice'];
+                                                        
 
                                                         # code...
 
@@ -131,12 +133,12 @@ function pre_r($array)
         <td>  " . $i++ . "</td>
         <td>  " . $name . "</td>
         <td>  " . $type . "</td>
-        <td>  " . $date . "</td>
         <td>  " . $quantity . "</td>
-        <td>  " . "RM" . $cost . "</td>
+        <td>  " . $supplier . "</td>
         <td>  " . "RM" . $unitPrice . "</td>
+        <td>  " . "RM" . $sellingPrice . "</td>
         <td>" . "<a  href='editProduct.php?edit=".$row["itemID"] . "'<span class='material-icons-outlined'></span> Edit</a>" . "
-               <a  href='viewProduct.php?delete=".$row["itemID"] . "'<span class='material-icons-outlined'></span> Delete</a>" . "
+               <a  href='inventory.php?delete=".$row["itemID"] . "'<span class='material-icons-outlined'></span> Delete</a>" . "
         </td>";
 
                                                         // <td>"."<a  href='product_view.php? ID=".$row["itemID "] ."'<span class='material-icons-outlined'></span> View</a>"."</td>";

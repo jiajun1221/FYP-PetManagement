@@ -45,8 +45,6 @@ if(isset($_GET['ID'])&&isset($_POST['received'])&&isset($_POST['received_btn'])&
       $sql="UPDATE inventory SET quantity = quantity + '$quantity' WHERE itemName='$product'";
       mysqli_query($conn,$sql);
 
-      
-      
     
   }
 

@@ -92,7 +92,7 @@ function pre_r($array)
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Type</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Quantity</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Expiry Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">Cost</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">sellingPrice</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Unit Price</th>
                                                 </tr>
                                             </thead>
@@ -110,7 +110,7 @@ function pre_r($array)
                                                             } ?></td>
                                                         <td><?php echo $user_info['quantity']; ?></td>
                                                         <td><?php echo $user_info['expiryDate']; ?></td>
-                                                        <td><?php echo $user_info['cost']; ?></td>
+                                                        <td><?php echo $user_info['sellingPrice']; ?></td>
                                                         <td><?php echo $user_info['unitprice']; ?></td>
 
 

@@ -8,10 +8,10 @@ if (isset($_POST['update'])) {
     $quantity = $_POST['quantity'];
     $expiryDate = $_POST['expiryDate'];
     $label = $_POST['label'];
-    $cost = $_POST['cost'];
+    $sellingPrice = $_POST['sellingPrice'];
     $unitprice = $_POST['unitprice'];
     $image =  $_FILES["image"]["name"];
-    mysqli_query($connect, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', cost = '$cost', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
+    mysqli_query($connect, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', sellingPrice = '$sellingPrice', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
         or die($connect->error);
 
     $target_dir = "../../../app-assets/img/product/";
@@ -66,7 +66,7 @@ if (isset($_GET['edit'])) {
     $quantity = $row['quantity'];
     $expiryDate = $row['expiryDate'];
     $label = $row['label'];
-    $cost = $row['cost'];
+    $sellingPrice = $row['sellingPrice'];
     $unitprice = $row['unitprice'];
 
     $_SESSION['message'] = "Record has been Saved";
@@ -199,10 +199,10 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="cost">Cost</label>
+                                                    <label for="sellingPrice">sellingPrice</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="cost" id="cost" class="form-control" name="cost" value="<?php echo $cost ?>" />
+                                                    <input type="sellingPrice" id="sellingPrice" class="form-control" name="sellingPrice" value="<?php echo $sellingPrice ?>" />
                                                 </div>
                                             </div>
                                         </div>
