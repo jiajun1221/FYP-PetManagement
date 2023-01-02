@@ -50,8 +50,6 @@ if(isset($_GET['ID'])&&isset($_POST['received'])&&isset($_POST['received_btn'])&
 
 
 
-   
-
         echo"<script>window.location.href = 'do_list.php';</script>";
        
 }
