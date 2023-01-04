@@ -4,10 +4,11 @@ include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($conn, "DELETE FROM staff WHERE staffID=$id");
+    mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
     unset($_GET['delete']);
 
-   echo "<script>alert('Record has been deleted');</script>";
+    $_SESSION['message'] = "Record has been Deleted";
+    $_SESSION['msg_type'] = "danger";
 }
 
 function pre_r($array)
@@ -40,12 +41,12 @@ function pre_r($array)
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="row breadcrumbs-top">
                             <div class="col-12">
-                                <h2 class="content-header-title float-left mb-0">Staff Page</h2>
+                                <h2 class="content-header-title float-left mb-0">Inventory Page</h2>
                                 <div class="breadcrumb-wrapper">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Profile</a>
+                                        <li class="breadcrumb-item"><a href="index.html">Inventory</a>
                                         </li>
-                                        <li class="breadcrumb-item"><a href="#">Staff</a>
+                                        <li class="breadcrumb-item"><a href="#">Product</a>
                                         </li>
                                     </ol>
                                 </div>
@@ -62,7 +63,7 @@ function pre_r($array)
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                         <div class="card-header border-bottom p-1" bis_skin_checked="1">
                                             <div class="head-label" bis_skin_checked="1">
-                                                <h4 class="mb-0">Staff List</h4>
+                                                <h4 class="mb-0">Products List</h4>
                                             </div>
 
                                         </div><br>
@@ -74,10 +75,10 @@ function pre_r($array)
                                                     <br>
                                                 </div>
                                                 <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                    <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addStaff.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
+                                                    <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addProduct.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
                                                                         <line x1="12" y1="5" x2="12" y2="19"></line>
                                                                         <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                                    </svg>Add New Record</span></button></a>
+                                                                    </svg>Add New Item</span></button></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,11 +88,13 @@ function pre_r($array)
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">#</th>
-                                                        <th scope="col">Staff Name</th>
-                                                        <th scope="col">Gender</th>
-                                                        <th scope="col">Email</th>
-                                                        <th scope="col">Contact</th>
-                                                        <th scope="col">Speciality</th>
+                                                        <th scope="col">Product name</th>
+                                                        <th scope="col">Item type</th>
+                                                        <!-- <th scope="col">Expiry date</th> -->
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Supplier</th>
+                                                        <th scope="col">Unit price</th>
+                                                        <th scope="col">Selling Price</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -101,16 +104,25 @@ function pre_r($array)
 
                                                     // include '../../connect.php';
                                                     $i = 1;
-                                                    $sql    = "SELECT * FROM staff";
+                                                    $sql    = "SELECT * FROM inventory 
+                INNER JOIN category 
+                ON category.categoryID = inventory.itemType ";
                                                     $result = $conn->query($sql);
 
                                                     while ($row = $result->fetch_assoc()) {
 
-                                                        $name     = $row['staffName'];
-                                                        $gender = $row['gender'];
-                                                        $email = $row['email'];
-                                                        $contact = $row['contact'];
-                                                        $speciality = $row['speciality'];
+                                                        $name     = $row['itemName'];
+                                                        $category = $row['itemType'];
+                                                        $categoryID = $row['categoryID'];
+                                                        $categoryName = $row['categoryName'];
+                                                        if ($category == $categoryID) {
+                                                            $type = $categoryName;
+                                                        }
+                                                        $quantity = $row['quantity'];
+                                                        $supplier = $row['supplier'];
+                                                        // $date     = date("d/m/Y", strtotime($row["expiryDate"]));
+                                                        $unitPrice = $row['unitprice'];
+                                                        $sellingprice = $row['sellingprice'];
                                                         
 
                                                         # code...
@@ -120,12 +132,13 @@ function pre_r($array)
         <tr>
         <td>  " . $i++ . "</td>
         <td>  " . $name . "</td>
-        <td>  " . $gender . "</td>
-        <td>  " . $email . "</td>
-        <td>  " . $contact . "</td>
-        <td>  " . $speciality . "</td>
-        <td>" . "<a  href='editStaff.php?edit=".$row["staffID"] . "'<span class='btn-sm btn-outline-primary waves-effect material-icons-outlined'></span> Edit</a>" . "
-               <a  href='viewStaff.php?delete=".$row["staffID"] . "'<span class='btn-sm btn-danger waves-effect material-icons-outlined'></span> Delete</a>" . "
+        <td>  " . $type . "</td>
+        <td>  " . $quantity . "</td>
+        <td>  " . $supplier . "</td>
+        <td>  " . "RM" . $unitPrice . "</td>
+        <td>  " . "RM" . $sellingprice . "</td>
+        <td>" . "<a  href='editProduct.php?edit=".$row["itemID"] . "'<span class='btn-sm btn-outline-primary waves-effect material-icons-outlined'></span> Edit</a>" . "
+               <a  href='inventory.php?delete=".$row["itemID"] . "'<span class='btn-sm btn-danger waves-effect material-icons-outlined'></span> Delete</a>" . "
         </td>";
 
                                                         // <td>"."<a  href='product_view.php? ID=".$row["itemID "] ."'<span class='btn-sm btn-primary waves-effect material-icons-outlined'></span> View</a>"."</td>";
