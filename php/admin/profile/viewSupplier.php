@@ -7,8 +7,7 @@ if (isset($_GET['delete'])) {
     mysqli_query($conn, "DELETE FROM supplier WHERE supplierID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+    echo "<script>alert('Record has been deleted');</script>";
 }
 
 function pre_r($array)

@@ -1,6 +1,6 @@
 <?php
 // include connection for DB 
-include 'connect.php';
+include '../../connect.php';
 
 // if button is clicked value will go the this $_POST thingy
 if (isset($_POST['register_btn'])) {
@@ -43,7 +43,7 @@ if (mysqli_query($conn,$sql1)) {
     // mysqli_query($conn,$sql3);
     // mysqli_query($conn,$sql4);
 
-    // echo "<script>alert('Purchase Order has been created');</script>";
+    echo "<script>alert('Purchase Order has been created');</script>";
     echo "<script>window.location.assign('po_list.php');</script>";
 }
 

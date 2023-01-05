@@ -1,33 +1,14 @@
-<?php
+<?php include '../header.php';
 
-include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
-include('../../connect.php');
-
-if (isset($_POST['accept'])) {
-    $id = $_GET['accept'];
-    $status = "scheduled";
-    mysqli_query($connect, "UPDATE 'appointment' SET `status`='$status' WHERE appointmentID = '$id' ")
-        or die($mysqli->error);
-    header('location:viewAppointment.php');
-}
-
+include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM `appointment` WHERE appointmentID=$id");
+    mysqli_query($conn, "DELETE FROM `appointment` WHERE appointmentID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+    echo "<script>alert('Record has been deleted');</script>";
 }
-
-$result = mysqli_query($connect, "SELECT * FROM `appointment`")
-    or die($mysqli->error);
-
-$current_status_type = $_GET['status'];
-//pre_r($result);
-//pre_r($result->fetch_assoc());
 
 function pre_r($array)
 {
@@ -35,81 +16,123 @@ function pre_r($array)
     print_r($array);
     echo '</pre>';
 }
+
 ?>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+
 <!-- BEGIN: Content-->
-
-<div class="app-content content " bis_skin_checked="1">
-    <div class="content-overlay" bis_skin_checked="1"></div>
-    <div class="header-navbar-shadow" bis_skin_checked="1"></div>
-    <div class="content-wrapper" bis_skin_checked="1">
-        <div class="content-body" bis_skin_checked="1">
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-body">
             <!-- Basic Horizontal form layout section start -->
-            <div class="content-wrapper" bis_skin_checked="1">
-                <div class="content-header row" bis_skin_checked="1">
-                    <div class="content-header-left col-md-9 col-12 mb-2" bis_skin_checked="1">
-                        <div class="row breadcrumbs-top" bis_skin_checked="1">
-                            <div class="col-12" bis_skin_checked="1">
-                                <h2 class="content-header-title float-left mb-0">Appointment</h2>
-
+            <div class="content-wrapper">
+                <div class="content-header row">
+                    <div class="content-header-left col-md-9 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="col-12">
+                                <h2 class="content-header-title float-left mb-0">Appointment Page</h2>
+                                <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Appointment</a>
+                                        </li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="content-body" bis_skin_checked="1">
+                <div class="content-body">
                     <!-- Basic table -->
                     <section id="basic-datatable">
-                        <div class="row" bis_skin_checked="1">
-                            <div class="col-12" bis_skin_checked="1">
-                                <div class="card" bis_skin_checked="1">
-                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer" bis_skin_checked="1">
-                                        <div class="card-header bappointment-bottom p-1" bis_skin_checked="1">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                        <div class="card-header border-bottom p-1" bis_skin_checked="1">
                                             <div class="head-label" bis_skin_checked="1">
-                                                <h4 class="mb-0">Appointments List</h4>
+                                                <h4 class="mb-0">Appointment Table</h4>
                                             </div>
 
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
+                                        </div><br>
+                                        <!-- table  starts-->
+                                        <div class="content-header-center col-12">
+                                             <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
 
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div id="DataTables_Table_0_filter" class="dataTables_filter" bis_skin_checked="1"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label>
-                                                    <a><i class="searchicon" data-feather="search"></i></a></li>
-                                                </div>
+                                               
                                             </div>
-                                            
-                                        </div>
-                                        <table class="datatables-basic table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1205px;">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 114px;">Appointment ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 90px;">Pet ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 90px;">Service</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 140px;">Appointment Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 140px;">Appointment Time</th>
-                                                   </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                while ($user_info = $result->fetch_assoc()) : {
-                                                ?>
-                                                        <tr>
-                                                            <td><?php echo $user_info['appointmentID']; ?></td>
-                                                            <td><?php echo $user_info['petID']; ?></td>
-                                                            <td><?php echo $user_info['serviceType']; ?></td>
-                                                            <td><?php echo $user_info['appointmentDate']; ?></td>
-                                                            <td><?php echo $user_info['appointmentTime']; ?></td>
-                                                        </tr>
-                                                <?php
+                                           
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="do_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Pet</th>
+                                                        <th scope="col">Service Type</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Time</th>
+                                                       
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <?php
+
+                                                    // include '../../connect.php';
+                                                    $i = 1;
+                                                    $sql    = "SELECT * FROM appointment INNER JOIN pet  
+                                                    ON pet.petID = appointment.petID" ;
+                                                 $result = $conn->query($sql);
+
+                                                    while ($row = $result->fetch_assoc()) {
+
+                                                        $petID     = $row['petName'];
+                                                        $serviceType = $row['serviceType'];
+                                                        $appointmentDate = $row['appointmentDate'];
+                                                        $appointmentTime = $row['appointmentTime'];
+                                                        
+                                                        // $appointmentDate     = appointmentDate("d/m/Y", strtoappointmentTime($row["expiryDate"]));
+                                                        
+                                                        
+
+                                                        # code...
+
+
+                                                        echo "
+        <tr>
+        <td>  " . $i++ . "</td>
+        <td>  " . $petID . "</td>
+        <td>  " . $serviceType . "</td>
+        <td>  " . $appointmentDate . "</td>
+        <td>  " . $appointmentTime . "</td>
+        <td> </td>
+                                                        </tr>";
                                                     }
-                                                endwhile; ?>
-                                            </tbody>
-                                        </table>
-                                        <div class="d-flex justify-content-between mx-0 row" bis_skin_checked="1">
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
+                                                    echo "</table>"
+
+                                                    ?>
+
+
+
+                                        </div>
+</div>
+                                        <!-- table ends -->
+                                        <div class="d-flex justify-content-between mx-0 row">
+
+                                            <div class="col-sm-12 col-md-6">
+
 
                                             </div>
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate" bis_skin_checked="1">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                                                     <ul class="pagination">
 
                                                     </ul>
@@ -121,7 +144,6 @@ function pre_r($array)
                             </div>
                         </div>
 
-                    </section>
                 </div>
             </div>
 
@@ -149,3 +171,18 @@ function pre_r($array)
 <!-- END: Page Vendor JS-->
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('#do_table').DataTable({
+
+            "bInfo": false,
+            "order": [],
+            "columnDefs": [{
+                "targets": [0, 1, 2, 3, 4, 5],
+                "orderable": true,
+            }, ],
+        });
+
+    });
+</script>

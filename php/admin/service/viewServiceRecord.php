@@ -2,6 +2,7 @@
 
 include '../../connect.php';
 
+
 $current_service_type = $_GET['type'];
 
 if (isset($_POST['update'])) {
@@ -11,22 +12,21 @@ if (isset($_POST['update'])) {
     $time = $_POST['time'];
     $price = $_POST['price'];
 
-    mysqli_query($connect, "UPDATE `service` SET serviceType='$serviceType',servicePETID='$servicePETID', date='$date', time = '$time', price = '$price'WHERE serviceID = '$serviceID' ")
+    mysqli_query($conn, "UPDATE `service` SET serviceType='$serviceType',servicePETID='$servicePETID', date='$date', time = '$time', price = '$price'WHERE serviceID = '$serviceID' ")
         or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewService.php');
 }
 
-$result = mysqli_query($connect, "SELECT * FROM `service`")
+$result = mysqli_query($conn, "SELECT * FROM `service`")
     or die($mysqli->error);
 
 
 if (isset($_GET['edit'])) {
     $serviceID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM `service` WHERE serviceID='$serviceID'");
+    $result = mysqli_query($conn, "SELECT * FROM `service` WHERE serviceID='$serviceID'");
     $row = $result->fetch_array();
     $serviceType = $row['serviceType'];
     $servicePETID = $row['servicePETID'];
@@ -35,7 +35,7 @@ if (isset($_GET['edit'])) {
     $price = $row['price'];
 
     $petID = $row['servicePETID'];
-    $result2 = mysqli_query($connect, "SELECT * FROM pet WHERE petID=$petID");
+    $result2 = mysqli_query($conn, "SELECT * FROM pet WHERE petID=$petID");
     $row = $result2->fetch_array();
     $petName = $row['petName'];
     $gender = $row['gender'];
@@ -48,13 +48,13 @@ if (isset($_GET['edit'])) {
     $image = $row['image'];
 
     if ($serviceType == "Grooming") {
-        $result3 = mysqli_query($connect, "SELECT * FROM `grooming` WHERE GserviceID='$serviceID'");
+        $result3 = mysqli_query($conn, "SELECT * FROM `grooming` WHERE GserviceID='$serviceID'");
         $row = $result3->fetch_array();
         $groomingID = $row['groomingID'];
         $groomingInfo = $row['groomingInfo'];
         $groomingDesc = $row['groomingDesc'];
     } else if ($serviceType == "Hotel") {
-        $result4 = mysqli_query($connect, "SELECT * FROM `hotel` WHERE HserviceID='$serviceID'");
+        $result4 = mysqli_query($conn, "SELECT * FROM `hotel` WHERE HserviceID='$serviceID'");
         $row = $result4->fetch_array();
         $hotelID = $row['hotelID'];
         $startDate = $row['startDate'];
@@ -62,7 +62,7 @@ if (isset($_GET['edit'])) {
         $endDate = $row['endDate'];
         $duration = $row['duration'];
     } else if ($serviceType == "Vet") {
-        $result5 = mysqli_query($connect, "SELECT * FROM `vet` WHERE VserviceID='$serviceID'");
+        $result5 = mysqli_query($conn, "SELECT * FROM `vet` WHERE VserviceID='$serviceID'");
         $row = $result5->fetch_array();
         $vetID = $row['vetID'];
         $vetInfo = $row['vetInfo'];
@@ -83,7 +83,7 @@ if (isset($_GET['edit'])) {
     $_SESSION['msg_type'] = "success";
 }
 
-$result2 = mysqli_query($connect, "SELECT * FROM `pet`")
+$result2 = mysqli_query($conn, "SELECT * FROM `pet`")
     or die($mysqli->error);
 
 
@@ -521,7 +521,7 @@ include '../header.php';
                                                             <label for="remark">Remark</label>
                                                         </div>
                                                         <div class="col-sm-9">
-                                                            <textarea name="remark" class="form-control" id="exampleFormControlTextarea1" rows="3" value="<?php echo $remark ?>"></textarea>
+                                                            <textarea name="remark" readonly class="form-control" id="exampleFormControlTextarea1" rows="3" value="<?php echo $remark ?>"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>

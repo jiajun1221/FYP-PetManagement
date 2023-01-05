@@ -9,18 +9,17 @@ if (isset($_POST['update'])) {
     $contact = $_POST['contact'];
     $address = $_POST['address'];
 
-    mysqli_query($connect, "UPDATE customer SET customerName='$customerName',gender='$gender',email='$email', contact = '$contact', address = '$address' WHERE customerID = '$customerID' ")
-        or die($connect->error);
+    mysqli_query($conn, "UPDATE customer SET customerName='$customerName',gender='$gender',email='$email', contact = '$contact', address = '$address' WHERE customerID = '$customerID' ")
+        or die($conn->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewCustomer.php');
 }
 
 if (isset($_GET['edit'])) {
     $customerID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM customer WHERE customerID='$customerID'");
+    $result = mysqli_query($conn, "SELECT * FROM customer WHERE customerID='$customerID'");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $customerName = $row['customerName'];
@@ -100,17 +99,11 @@ include '../header.php';
                                                     <label for="gender">Gender</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <div class="demo-inline-spacing">
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="gender" class="custom-control-input" value="Male" <?php if ($gender == "Male") echo "selected" ?>>
-                                                            <label class="custom-control-label" for="customRadio1">Male</label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio2" name="gender" class="custom-control-input" value="Female" <?php if ($gender == "Female") echo "selected" ?>>
-                                                            <label class="custom-control-label" for="customRadio2">Female</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    <select id="gender" name="gender">
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                    </select>
+                                                </div> 
                                             </div>
                                         </div>
 

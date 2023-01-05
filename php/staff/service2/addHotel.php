@@ -2,56 +2,59 @@
 
 include '../../connect.php';
 
+
+$result2 = mysqli_query($conn, "SELECT MAX(`serviceID`) as `id` FROM `service`")
+or die($mysqli->error);
+
+while ($row = $result2->fetch_assoc()) { 
+    $serviceID = $row['id'];
+}
+
+$result3 = mysqli_query($conn, "SELECT * FROM `service` Where serviceID = '$serviceID'")
+or die($mysqli->error);
+
+while ($row = $result3->fetch_assoc()) {
+    $service_result = $row;
+}
+
 if (isset($_POST['submit'])) {
-    $result2 = mysqli_query($conn, "SELECT MAX(`serviceID`) as `id` FROM `service`")
-        or die($mysqli->error);
-
-    while ($row = $result2->fetch_assoc()) {
-        $serviceID = $row['id'];
-    }
-  
-    $vetID = $_POST['vetID'];
-    $vetInfo = $_POST['vetInfo'];
-    $status = $_POST['status'];
-    $remark = $_POST['remark'];
-    $vetDesc = $_POST['vetDesc'];
+   
+    // $hotelID = $_POST['hotelID'];
     $petType = $_POST['petType'];
+    $startDate = $_POST['date'];
+    $hotelDesc = $_POST['hotelDesc'];
+    $endDate = $_POST['endDate'];
+    $duration = $_POST['duration'];
 
-    if ($petType == "Dog") {
-        if ($vetInfo == "Vet Checkout") {
-            $price = '130';
-        } else if ($vetInfo == "Injuries Threatment") {
-            $price = '200';
-        } else if ($vetInfo == "Diseases Threatment") {
-            $price = '200';
-        } else if ($vetInfo == "Vaccination") {
-            $price = '60';
-        }
-    } else if ($petType == "Cat") {
-        if ($vetInfo == "Vet Checkout") {
-            $price = '150';
-        } else if ($vetInfo == "Injuries Threatment") {
-            $price = '210';
-        } else if ($vetInfo == "Diseases Threatment") {
-            $price = '200';
-        } else if ($vetInfo == "Vaccination") {
-            $price = '80';
-        }
-    }
-
-    mysqli_query($conn, "INSERT INTO `vet`(VserviceID,vetInfo,status,remark,vetDesc) VALUES('$serviceID','$vetInfo','$status','$remark','$vetDesc')");
-    mysqli_query($conn, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
-        or die($conn->error);
     $fp = fopen("testing.txt", "w");
     $write["post"] = $_POST;
-    $write["serviceID"] = $serviceID;
-    $write["price"] = $price;
-    $write["date"] = $date;
+    fwrite($fp, print_r($write, true));
+    fclose($fp);
+
+
+    if ($petType == "Dog") {
+        $price= $duration * 40 ;
+    } else if ($petType == "Cat") {
+        $price = $duration * 35;
+    }
+
+    mysqli_query($conn, "INSERT INTO `hotel`(HserviceID,hotelDesc,startDate,endDate,duration) VALUES('$serviceID','$hotelDesc','$startDate','$endDate','$duration')");
+    mysqli_query($conn, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
+        or die($conn->error);
     
+    $fp = fopen("testing.txt", "w");
+    $write["userID"] = $_POST;
+    $write["query"] = "INSERT INTO `hotel`(HserviceID,hotelDesc,startDate,endDate,duration) VALUES('$serviceID','$hotelDesc','$startDate','$endDate','$duration')";
+    $write["result"] = $_POST;
+    fwrite($fp, print_r($write, true));
+    fclose($fp);
+
     echo "<script>alert('Record has been added');</script>";
 
     header('location:viewService.php');
 }
+
+
 
 include '../header.php';
 ?>
@@ -72,13 +75,14 @@ include '../header.php';
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Service</a>
                                 </li>
-                                <li class="breadcrumb-item active">Add Vet Service</a>
+                                <li class="breadcrumb-item active">Add Hotel Service</a>
                                 </li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
+           
         </div>
         <div class="content-body">
             <!-- Basic Horizontal form layout section start -->
@@ -87,15 +91,16 @@ include '../header.php';
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Add Vet Service</h4>
+                                <h4 class="card-title">Add Hotel Service</h4>
                             </div>
                             <div class="card-body">
                                 <form class="form form-horizontal" method="POST">
                                     <div class="row">
+
                                         <div class="col-12"><br>
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="vetInfo">Pet Type</label>
+                                                    <label for="hotelType">Pet Type</label>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <div class="demo-inline-spacing">
@@ -112,93 +117,53 @@ include '../header.php';
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="vetInfo">Vet Info</label>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <select name="vetInfo" class="custom-select" id="customSelect">
-                                                        <option selected="">...</option>
-                                                        <option value="Vet Checkout">Vet Checkout</option>
-                                                        <option value="Injuries Threatment">Injuries Threatment</option>
-                                                        <option value="Diseases Threatment">Diseases Threatment</option>
-                                                        <option value="Vaccination">Vaccination</option>
-                                                    </select>
-                                                    <!-- <div class="demo-inline-spacing">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="basicall" >
-                                                            <label class="custom-control-label"for="Bath" >All of above</label>
-                                                        </div>
-                                                    </div> -->
 
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="vetDesc">Vet Description</label>
+                                                    <label for="date">Start Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <textarea name="vetDesc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                    <input name="date" id="datefield" type='date' min='1899-01-01' max='2000-13-13' value="<?php echo $service_result['date'] ?>" readonly></input>
+
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="vetDesc">Medicine Used (per unit)</label>
-                                                </div>
-                                                <div class="col-sm-4">
-
-                                                    <select id="itemType" name="itemType">
-                                                      
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-sm-0">
-                                                    <form action="/action_page.php">
-                                                        <label for="qty">Quantity:</label>
-                                                        <input type="number" id="qty" name="qty" min="1" max="30">
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div> -->
-
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="status">Status</label>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <select name="status" class="custom-select" id="customSelect">
-                                                        <option selected="">...</option>
-                                                        <option value="Healthy">Healthy</option>
-                                                        <option value="Slightly Injured">Slightly Injured</option>
-                                                        <option value="Injured">Seriously Injured</option>
-                                                        <option value="Slightly Sick">Slightly Sick</option>
-                                                        <option value="Seriously Sick">Seriously Sick</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="vetDesc">Health Description</label>
+                                                    <label for="endDate">End Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <textarea name="remark" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                    <input name="endDate" id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="duration">Duration (Days)</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="duration" class="form-control" name="duration" placeholder="1-3"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="hotelDesc">Remark</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <textarea name="hotelDesc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <div class="col-sm-9 offset-sm-3">
                                             <div class="form-group">
@@ -232,8 +197,7 @@ include '../header.php';
 
 </html>
 
-
-<script>
+<!-- <script>
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
@@ -246,21 +210,5 @@ include '../header.php';
     }
 
     today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("statusfield").setAttribute("max", today);
-</script>
-
-<script>
-    function toggle(source) {
-        checkboxes = document.getElementsByName('basic');
-        for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-
-    function toggle(source) {
-        checkboxes = document.getElementsByName('advance');
-        for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
-        }
-    }
-</script>
+    document.getElementById("datefield").setAttribute("max", today);
+</script> -->

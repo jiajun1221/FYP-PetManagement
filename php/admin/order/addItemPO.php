@@ -1,5 +1,5 @@
 <?php
-    require "connect.php";
+    require "../../connect.php";
     if(isset($_GET['ID'])){ // get value from database via ID
 
         $ID = $_GET['ID'];
@@ -25,7 +25,7 @@
             
             // echo "<script>alert('product Updated')</script>";
         }
-
+        echo "<script>alert('Record has been updated');</script>";
         echo "<script>window.location.assign('po_list.php');</script>";
 
     }

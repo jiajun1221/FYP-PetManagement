@@ -6,7 +6,7 @@ if (isset($_POST['update'])) {
     $petID = $_GET['edit'];
     $status = $_POST['status'];
     $remark = $_POST['remark'];
-    mysqli_query($connect, "UPDATE pet SET status='$status', remark='$remark' WHERE petID = '$petID' ")
+    mysqli_query($conn, "UPDATE pet SET status='$status', remark='$remark' WHERE petID = '$petID' ")
         or die($mysqli->error);
 
     $fp = fopen("testing.txt", "w");
@@ -16,15 +16,14 @@ if (isset($_POST['update'])) {
     fwrite($fp, print_r($write, true));
     fclose($fp);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+    echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewPet.php');
 }
 
 if (isset($_GET['edit'])) {
     $petID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM pet WHERE petID=$petID");
+    $result = mysqli_query($conn, "SELECT * FROM pet WHERE petID=$petID");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $petID = $row['petID'];

@@ -9,7 +9,7 @@ if (isset($_POST['update'])) {
         $quantity = $invoice['quantity'];
 
         //Check inventory total
-        $result = mysqli_query($connect, "SELECT quantity FROM `inventory` WHERE itemID='$itemID'")
+        $result = mysqli_query($conn, "SELECT quantity FROM `inventory` WHERE itemID='$itemID'")
             or die($mysqli->error);
         $row = mysqli_fetch_assoc($result);
         $current_quantity = $row['quantity'];
@@ -27,26 +27,23 @@ if (isset($_POST['update'])) {
         fclose($fp);
 
         //Update total
-        mysqli_query($connect, "UPDATE `inventory` SET quantity='$new_quantity' WHERE itemID=$itemID")
+        mysqli_query($conn, "UPDATE `inventory` SET quantity='$new_quantity' WHERE itemID=$itemID")
             or die($mysqli->error);
+            echo "<script>alert('Inventory has been updated');</script>";
         echo "<script>window.location.assign('viewInventory.php');</script>";
         // header('location:viewInventory.php');
     }
 
-
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
 }
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
+    mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
     unset($_GET['delete']);
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM inventory")
+$result = mysqli_query($conn, "SELECT * FROM inventory")
     or die($mysqli->error);
 
 

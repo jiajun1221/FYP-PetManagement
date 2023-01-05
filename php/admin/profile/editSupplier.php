@@ -8,18 +8,17 @@ if (isset($_POST['update'])) {
     $contactNo = $_POST['contactNo'];
     $address = $_POST['address'];
 
-    mysqli_query($connect, "UPDATE supplier SET supplierName='$supplierName',contactName='$contactName', contactNo = '$contactNo', address = '$address' WHERE supplierID = '$supplierID' ")
-        or die($connect->error);
+    mysqli_query($conn, "UPDATE supplier SET supplierName='$supplierName',contactName='$contactName', contactNo = '$contactNo', address = '$address' WHERE supplierID = '$supplierID' ")
+        or die($conn->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewSupplier.php');
 }
 
 if (isset($_GET['edit'])) {
     $supplierID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM supplier WHERE supplierID='$supplierID'");
+    $result = mysqli_query($conn, "SELECT * FROM supplier WHERE supplierID='$supplierID'");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $supplierName = $row['supplierName'];

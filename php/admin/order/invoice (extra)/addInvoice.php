@@ -4,7 +4,7 @@ include '../../connect.php';
 
 if (isset($_GET['edit'])) {
     $orderID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM `order` WHERE orderID='$orderID'");
+    $result = mysqli_query($conn, "SELECT * FROM `order` WHERE orderID='$orderID'");
     $row = $result->fetch_array();
     $orderItem = $row['orderItem'];
     $qty = $row['qty'];
@@ -16,14 +16,13 @@ if (isset($_POST['update'])) {
     $orderID = $_GET['edit'];
     $customerName = $_POST['customerName'];
     $new_status = '1';
-    $result = mysqli_query($connect, "SELECT * FROM `order`");
+    $result = mysqli_query($conn, "SELECT * FROM `order`");
 
     //Update total
-    mysqli_query($connect, "UPDATE `order` SET `status`='$new_status' WHERE orderID=$orderID")
+    mysqli_query($conn, "UPDATE `order` SET `status`='$new_status' WHERE orderID=$orderID")
         or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewOrder.php');
 }
@@ -31,15 +30,14 @@ if (isset($_POST['update'])) {
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM inventory WHERE orderItem=$id");
+    mysqli_query($conn, "DELETE FROM inventory WHERE orderItem=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
 
-$result = mysqli_query($connect, "SELECT * FROM inventory")
+$result = mysqli_query($conn, "SELECT * FROM inventory")
     or die($mysqli->error);
 
 
