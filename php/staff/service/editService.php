@@ -9,18 +9,17 @@ if (isset($_POST['update'])) {
 
     
 
-    mysqli_query($connect, "UPDATE service SET serviceType='$serviceType', date='$date', time = '$time', price = '$price'WHERE serviceID = '$serviceID' ")
+    mysqli_query($conn, "UPDATE service SET serviceType='$serviceType', date='$date', time = '$time', price = '$price'WHERE serviceID = '$serviceID' ")
         or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewService.php');
 }
 
 if (isset($_GET['edit'])) {
     $serviceID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM service WHERE serviceID='$serviceID'");
+    $result = mysqli_query($conn, "SELECT * FROM service WHERE serviceID='$serviceID'");
     unset($_GET['edit']);
 
     $fp = fopen("testing.txt","w");

@@ -1,14 +1,16 @@
 Array
 (
-    [userID] => Array
+    [result] => Array
         (
-            [supplierName] => Coco&Joe Sdn Bhd
-            [contactName] => John
-            [contactNo] => 012-3456789
-            [address] => No 79 jalan perindustrian, Jalan Kasban 4/Ku8, kawasan perindustrian meru selatan, 41050 Klang, Selangor
+            [staffName] => ewv
+            [gender] => Male
+            [contact] => 231233
+            [speciality] => Pet Hotel Management
+            [userEmail] => user123@gmail.com
+            [userName] => Rice
+            [password] => 12345
+            [cpassword] => 12345
             [submit] => 
         )
 
-    [error] => 
-    [query] => INSERT INTO `supplier`(supplierName,contactName,contactNo,address) VALUES('Coco&Joe Sdn Bhd',John','012-3456789','No 79 jalan perindustrian, Jalan Kasban 4/Ku8, kawasan perindustrian meru selatan, 41050 Klang, Selangor')
 )

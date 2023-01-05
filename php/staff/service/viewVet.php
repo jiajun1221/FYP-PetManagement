@@ -1,22 +1,18 @@
 <?php
 
 include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
+$conn = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM `service` WHERE serviceID=$id");
+    mysqli_query($conn, "DELETE FROM `service` WHERE serviceID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM `service`")
-    or die($mysqli->error);
-
-$result2 = mysqli_query($connect, "SELECT * FROM `pet`")
+$result = mysqli_query($conn, "SELECT * FROM `service`")
     or die($mysqli->error);
 
 //pre_r($result);
@@ -63,9 +59,8 @@ function pre_r($array)
                                         <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
 
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div id="DataTables_Table_0_filter" class="dataTables_filter" bis_skin_checked="1"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label>
-                                                    <a><i class="searchicon" data-feather="search"></i></a></li>
-                                                </div>
+                                                <div id="DataTables_Table_0_filter" class="dataTables_filter" bis_skin_checked="1"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label> 
+                                                <a><i class="searchicon" data-feather="search"></i></a></li></div>
                                             </div>
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
                                                 <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addService.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
@@ -94,12 +89,12 @@ function pre_r($array)
                                                 ?>
                                                         <tr>
                                                             <td><?php echo $user_info['serviceID']; ?></td>
-                                                            <td><?php echo $user_info['servicePETID']; ?></td>
+                                                            <td><?php echo $user_info['serviceID']; ?></td>
                                                             <td><?php echo $user_info['serviceType']; ?></td>
                                                             <td><?php echo $user_info['date']; ?></td>
                                                             <td><?php echo $user_info['time']; ?></td>
                                                             <td><?php echo $user_info['price']; ?></td>
-                                                            <td><a href="viewServiceRecord.php?edit=<?php echo $user_info['serviceID']; ?>&type=<?php echo $user_info['serviceType']; ?>">
+                                                            <td><a href="viewServiceRecord.php?edit=<?php echo $user_info['serviceID']; ?>">
                                                                     <button class="btn-primary">View</button></a>
                                                                 <a href="viewService.php?delete=<?php echo $user_info['serviceID']; ?>">
                                                                     <button class="btn-outline-secondary">Delete</button></a>
@@ -116,7 +111,7 @@ function pre_r($array)
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
                                                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate" bis_skin_checked="1">
                                                     <ul class="pagination">
-
+                                                       
                                                     </ul>
                                                 </div>
                                             </div>

@@ -1,17 +1,17 @@
 <?php 
 include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
+$conn = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
 
 
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM category WHERE categoryID=$id");
+    mysqli_query($conn, "DELETE FROM category WHERE categoryID=$id");
    
-    
-
     unset($_GET['delete']);
+
+    echo "<script>alert('Record has been deleted');</script>";
 }
 
 $fp = fopen("testing.txt", "w");
@@ -27,10 +27,12 @@ $fp = fopen("testing.txt", "w");
 if (isset($_POST['submit'])) {
     $categoryID = $_POST['categoryID'];
     $categoryName = $_POST['categoryName'];
-    mysqli_query($connect, "INSERT INTO category(categoryID,categoryName) VALUES('$categoryID','$categoryName')");
+    mysqli_query($conn, "INSERT INTO category(categoryID,categoryName) VALUES('$categoryID','$categoryName')");
+    echo '<script>alert("New Record has been Added")</script>';
+    echo "<script>window.location.assign('category.php');</script>";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM category")
+$result = mysqli_query($conn, "SELECT * FROM category")
     or die($mysqli->error);
 
 
@@ -131,7 +133,7 @@ function pre_r($array)
                                                                 <td><?php echo $user_info['categoryName']; ?></td>
                                                                 <td>
                                                                     <a href="category.php?delete=<?php echo $user_info['categoryID']; ?>">
-                                                                        <button type="button" class="btn-outline-secondary">Delete</button></a>
+                                                                        <button type="button" class="btn-sm btn-danger">Delete</button></a>
                                                                         
                                                                 </td>
                                                             </tr>

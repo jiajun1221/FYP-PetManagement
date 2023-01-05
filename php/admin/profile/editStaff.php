@@ -49,8 +49,7 @@ if (isset($_POST['submit'])) {
 
     mysqli_query($conn, "INSERT INTO staff(staffName,userID,gender,email,contact,speciality) VALUES('$staffName','$userID','$gender','$userEmail','$contact','$speciality')")
         or die($conn->error);
-        echo '<script>alert("New Record has been Added")</script>';
-        echo "<script>window.location.assign('viewStaff.php');</script>";
+
 
     if ($password == $cpassword) {
         $result = mysqli_query($conn, "SELECT * FROM user where publish = '1'");
@@ -113,7 +112,6 @@ if (isset($_POST['submit'])) {
             // $_SESSION["userName"] = $userName;
             // $_SESSION['userid'] = $userID;
             // header("Location: registerstaff.php");
-            
         }
     } else {
         ?>

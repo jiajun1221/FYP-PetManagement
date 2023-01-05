@@ -10,7 +10,7 @@ unset($_SESSION['userID']);
 if (isset($_POST['signin'])) {
     $userEmail = $_POST['userEmail'];
     $password = base64_encode($_POST['password']);
-    $result = mysqli_query($connect, "SELECT * FROM user WHERE userEmail='$userEmail' AND password='$password'")
+    $result = mysqli_query($conn, "SELECT * FROM user WHERE userEmail='$userEmail' AND password='$password'")
         or die($mysqli->error);
 
     $fp = fopen("testing.txt", "w");

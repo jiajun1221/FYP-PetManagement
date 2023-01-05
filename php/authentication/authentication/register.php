@@ -25,7 +25,7 @@ if (isset($_POST['signup'])) {
 
 
     if ($password == $cpassword) {
-        $result = mysqli_query($connect, "SELECT * FROM user where publish = '1'");
+        $result = mysqli_query($conn, "SELECT * FROM user where publish = '1'");
 
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row['userEmail'] == $userEmail) {
@@ -67,10 +67,10 @@ if (isset($_POST['signup'])) {
                 }
             }*/
 
-            mysqli_query($connect, "INSERT INTO user(userName,userEmail,password,userGroup) VALUES('$userName','$userEmail','$password','$userGroup')")
-                or die($connect->error);
+            mysqli_query($conn, "INSERT INTO user(userName,userEmail,password,userGroup) VALUES('$userName','$userEmail','$password','$userGroup')")
+                or die($conn->error);
 
-            $cid = mysqli_query($connect, "SELECT max(userID) as userID FROM user");
+            $cid = mysqli_query($conn, "SELECT max(userID) as userID FROM user");
             $crow = mysqli_fetch_assoc($cid);
             $userID = $crow['userID'];
 

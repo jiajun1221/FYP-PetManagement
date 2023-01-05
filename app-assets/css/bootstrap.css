@@ -3415,10 +3415,10 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding : 0.486rem 1rem;
-  font-size : 0.9rem;
-  line-height : 1;
-  border-radius : 0.358rem;
+  padding: 0.4rem 0.5rem !important;
+    font-size: 0.8rem;
+    line-height: 1;
+    border-radius: 0.358rem
 }
 
 .btn-block {

@@ -288,7 +288,7 @@ function pre_r($array)
                                                         }
                                                         ?>
                                                         <br>
-                                                        <a href="do_list.php"><button class="btn btn-primary float-left">Back</button></a>
+                                                        <a href="do_list.php"><button class="btn btn-primary mr-1">Back</button></a>
 
                                                         <button type="submit" style="float:right;" class="btn btn-primary" name="received_btn">Received Item</button>
 

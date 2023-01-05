@@ -6,18 +6,17 @@ if (isset($_POST['update'])) {
     $appointmentDate = $_POST['appointmentDate'];
     $appointmentTime = $_POST['appointmentTime'];
     $serviceType = $_POST['serviceType'];
-    mysqli_query($connect, "UPDATE 'appointment' SET appointmentID='$appointmentID',appointmentDate='$appointmentDate', appointmentTime = '$appointmentTime', serviceType = '$serviceType' WHERE appointmentID = '$appointmentID' ")
+    mysqli_query($conn, "UPDATE 'appointment' SET appointmentID='$appointmentID',appointmentDate='$appointmentDate', appointmentTime = '$appointmentTime', serviceType = '$serviceType' WHERE appointmentID = '$appointmentID' ")
         or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewAppointment.php');
 }
 
 if (isset($_GET['edit'])) {
     $appointmentID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM appointment WHERE appointmentID=$appointmentID");
+    $result = mysqli_query($conn, "SELECT * FROM appointment WHERE appointmentID=$appointmentID");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $appointmentDate = $row['appointmentDate'];
@@ -25,8 +24,6 @@ if (isset($_GET['edit'])) {
     $serviceType = $row['serviceType'];
 
 
-    $_SESSION['message'] = "Record has been Saved";
-    $_SESSION['msg_type'] = "success";
 }
 
 

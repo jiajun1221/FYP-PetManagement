@@ -9,22 +9,22 @@ Array
                     [0] => 1
                     [1] => 5
                     [2] => 3
-                    [3] => 6
-                    [4] => 5
+                    [3] => 4
+                    [4] => 8
                     [5] => 10
-                    [6] => 13
-                    [7] => 1
+                    [6] => 5
+                    [7] => 2
                     [8] => 1
-                    [9] => 0
-                    [10] => 0
-                    [11] => 37
+                    [9] => 7
+                    [10] => 7
+                    [11] => 6
                 )
 
             [num_rows] => 1
             [type] => 0
         )
 
-    [query] => SELECT * FROM pet WHERE petID=8
+    [query] => SELECT * FROM pet WHERE petID=1
     [post] => Array
         (
         )

@@ -11,9 +11,11 @@ if (isset($_POST['update'])) {
     $color = $_POST['color'];
     $weight = $_POST['weight'];
 
-    mysqli_query($connect, "UPDATE pet SET petName='$petName',petType='$petType', gender='$gender', species = '$species', birthdate = '$birthdate', color='$color', weight = '$weight' WHERE petID = '$petID' ")
+    mysqli_query($conn, "UPDATE pet SET petName='$petName',petType='$petType', gender='$gender', species = '$species', birthdate = '$birthdate', color='$color', weight = '$weight' WHERE petID = '$petID' ")
         or die($mysqli->error);
 
+        echo "<script>alert('Record has been updated');</script>";
+        
     $target_dir = "../../../app-assets/img/pet/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
@@ -58,7 +60,7 @@ if (isset($_POST['update'])) {
 
 if (isset($_GET['edit'])) {
     $petID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM pet WHERE petID=$petID");
+    $result = mysqli_query($conn, "SELECT * FROM pet WHERE petID=$petID");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $petName = $row['petName'];
@@ -117,7 +119,7 @@ include '../header.php';
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Add Pet</h4>
+                                <h4 class="card-title">Edit Pet</h4>
                             </div>
                             <div class="card-body">
                                 <form class="form form-horizontal" method="POST" enctype="multipart/form-data"><br>
@@ -140,18 +142,12 @@ include '../header.php';
                                                 <div class="col-sm-3 col-form-label">
                                                     <label for="petType">Pet Type</label>
                                                 </div>
-                                                <div class="col-sm-9">
-                                                    <div class="demo-inline-spacing">
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="petType" class="custom-control-input" value="Dog">
-                                                            <label class="custom-control-label" for="customRadio1">Dog</label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio2" name="petType" class="custom-control-input" value="Cat">
-                                                            <label class="custom-control-label" for="customRadio2">Cat</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div class="col-sm-3">
+                                                    <select id="petType" name="petType">
+                                                            <option value="Dog">Dog</option>
+                                                            <option value="Cat">Cat</option>
+                                                    </select>
+                                                </div> 
                                             </div>
                                         </div>
 
@@ -160,18 +156,12 @@ include '../header.php';
                                                 <div class="col-sm-3 col-form-label">
                                                     <label for="gender">Gender</label>
                                                 </div>
-                                                <div class="col-sm-9">
-                                                    <div class="demo-inline-spacing">
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio3" name="gender" class="custom-control-input" value="Male">
-                                                            <label class="custom-control-label" for="customRadio3">Male</label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio4" name="gender" class="custom-control-input" value="Female">
-                                                            <label class="custom-control-label" for="customRadio4">Female</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <div class="col-sm-3">
+                                                    <select id="gender" name="gender">
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                    </select>
+                                                </div> 
                                             </div>
                                         </div>
 

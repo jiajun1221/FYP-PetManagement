@@ -1,19 +1,18 @@
 <?php
 
 include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
+$conn = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM `order` WHERE orderID=$id");
+    mysqli_query($conn, "DELETE FROM `order` WHERE orderID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM `order`")
+$result = mysqli_query($conn, "SELECT * FROM `order`")
     or die($mysqli->error);
 
 //pre_r($result);

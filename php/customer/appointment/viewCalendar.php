@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $serviceType = $_POST['serviceType'];
     $petID = $_POST['petID'];
 
-    mysqli_query($connect, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID')");
+    mysqli_query($conn, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID')");
     $_SESSION['message'] = "Record has been Saved!";
     $_SESSION['msg_type'] = "Success";
 

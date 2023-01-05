@@ -8,18 +8,17 @@ if (isset($_POST['update'])) {
     $serviceDate = $_POST['serviceDate'];
     $installDate = $_POST['installDate'];
     $totalPrice = $_POST['totalPrice'];
-    mysqli_query($connect, "UPDATE 'order' SET userID='$userID', purchaseDate='$purchaseDate', serviceDate = '$serviceDate', installDate = '$installDate', totalPrice = '$totalPrice' WHERE orderID = '$orderID' ")
+    mysqli_query($conn, "UPDATE 'order' SET userID='$userID', purchaseDate='$purchaseDate', serviceDate = '$serviceDate', installDate = '$installDate', totalPrice = '$totalPrice' WHERE orderID = '$orderID' ")
         or die($mysqli->error);
 
-    $_SESSION['message']="Record has been Saved!";
-    $_SESSION['msg_type']="success";
+        echo "<script>alert('Record has been updated');</script>";
 
     header('location:viewOrder.php');
     }
 
     if(isset($_GET['edit'])){
         $orderID = $_GET['edit'];
-        $result = mysqli_query($connect,"SELECT * FROM order WHERE orderID=$orderID");
+        $result = mysqli_query($conn,"SELECT * FROM order WHERE orderID=$orderID");
         unset($_GET['edit']);
          $row = $result ->fetch_array();
             $userID = $row['userID'];

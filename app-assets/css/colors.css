@@ -4283,7 +4283,7 @@ input:focus ~ .bg-warning {
 
 .btn-danger {
   border-color : #EA5455 !important;
-  background-color : #EA5455 !important;
+  background-color: #ff9192 !important;
   color : #FFFFFF !important;
 }
 

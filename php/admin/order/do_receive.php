@@ -2,57 +2,58 @@
 
 <?php
 
-include 'connect.php';
+include '../../connect.php';
 
-if(isset($_GET['ID'])&&isset($_POST['received'])&&isset($_POST['received_btn'])&&isset($_POST['item_status'])){
-
-  
-   $today           =   date("Y-m-d");
-   $received        =   $_POST['received'];
-   $item_status     =   $_POST['item_status'];
-   $DO_ID           =   $_GET['ID'];
+if (isset($_GET['ID']) && isset($_POST['received_btn']) && isset($_POST['received_qty'])) {
 
 
+    $today           =   date("Y-m-d");
+    $received        =   $_POST['received_qty'];
+    $item_status     =   $_POST['item_status'];
+    $DO_ID           =   $_GET['ID'];
 
-    if (is_array($_POST['received'])) {
+    $update_status = True;
 
-    for($i = 0; $i < count($received); $i++){
+    if (is_array($_POST['received_qty'])) {
 
-        $sql ="UPDATE `delivery_order_detail` SET `item_status`= '$item_status[$i]' WHERE `product`= '$received[$i]' AND `DO_ID`= '$DO_ID'";
-         mysqli_query($conn,$sql);
+        for ($i = 0; $i < count($received); $i++) {
 
-         
+            $quantity = $_POST['quantity'][$i];
+            $received_qty = $_POST['received_qty'][$i];
+            $item_status = $_POST['item_status'][$i];
+            $product = $_POST['product'][$i];
 
-        $sql2 ="UPDATE `delivery_order` SET `recieved_date`= '$today',`status` = 2 WHERE `ID`= '$DO_ID'";
-        mysqli_query($conn,$sql2);
+            if ($quantity == $received_qty) {
 
-        // $sql3 = "UPDATE `inventory` SET `quantity`= `quantity` + '$quantity' WHERE `barcode` = '$received[$i]'";
-        // mysqli_query($conn,$sql3);
+                mysqli_query($conn, "UPDATE delivery_order_detail SET item_status = '1',  quantity = '0' WHERE product = '$product' and DO_ID = '$DO_ID'") or die($mysqli->error);
 
-        // echo "<script>console.log('$sql')</script>";
-   //your sql
-}
+                mysqli_query($conn, "UPDATE `inventory` SET `quantity`= `quantity` + '$quantity' WHERE `itemName` = '$product'");
+                echo "<script>alert('Inventory has been updated');</script>";
+                mysqli_query($conn, $sql3);
 
-  // echo "<script>alert($ID)</script>";
-  $sql = "SELECT * FROM delivery_order_detail WHERE DO_ID='$DO_ID'";
-  $result = $conn->query($sql);
-  while($row = $result->fetch_assoc()){
+                $item_status = '1';
+            } else  if ($quantity > $received_qty) {
 
-      $product        = $row['product'];
-      $quantity       = $row['quantity'];
-      
-  
-      $sql="UPDATE inventory SET quantity = quantity + '$quantity' WHERE itemName='$product'";
-      mysqli_query($conn,$sql);
+                $new_quantity = $quantity - $received_qty;
 
-    
-  }
+                mysqli_query($conn, "UPDATE delivery_order_detail SET quantity = '$new_quantity' WHERE product = '$product' and DO_ID = '$DO_ID'") or die($mysqli->error);
 
+                mysqli_query($conn, "UPDATE `inventory` SET `quantity`= `quantity` + '$quantity' WHERE `itemName` = '$product'");
+                echo "<script>alert('Inventory has been updated');</script>";
+            }
 
+            if ($item_status == "0") {
+                $update_status = False;
+            }
+        }
 
-        echo"<script>window.location.href = 'do_list.php';</script>";
-       
-}
+        if ($update_status) {
+            mysqli_query($conn, "UPDATE delivery_order SET status = '2' WHERE ID = '$DO_ID'") or die($mysqli->error);
+            echo "<script>alert('Delivery Order Status has been updated');</script>";
+        }
+
+        header('Location: do_list.php');
+    }
 }
 
 ?>

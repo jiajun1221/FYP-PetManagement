@@ -49,8 +49,7 @@ if (isset($_POST['submit'])) {
     $write["date"] = $date;
     
     echo "<script>alert('Record has been added');</script>";
-
-    header('location:viewService.php');
+    echo "<script>window.location.assign('viewService.php');</script>";
 }
 
 include '../header.php';

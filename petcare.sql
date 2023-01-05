@@ -192,7 +192,7 @@ CREATE TABLE `inventory` (
   `quantity` int(255) NOT NULL,
   `expiryDate` date NOT NULL,
   `label` varchar(255) NOT NULL,
-  `sellingPrice` double(8,2) NOT NULL,
+  `sellingprice` double(8,2) NOT NULL,
   `unitprice` double(8,2) NOT NULL,
   `image` varbinary(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -201,7 +201,7 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`itemID`, `itemName`, `itemType`, `quantity`, `expiryDate`, `label`, `sellingPrice`, `unitprice`, `image`) VALUES
+INSERT INTO `inventory` (`itemID`, `itemName`, `itemType`, `quantity`, `expiryDate`, `label`, `sellingprice`, `unitprice`, `image`) VALUES
 (15, 'JJ Cat Food', '30', 65, '2022-12-24', 'Food', 25.00, 25.00, ''),
 (16, 'CL Dog Food', '30', 7, '2022-12-31', '', 20.00, 25.00, '');
 

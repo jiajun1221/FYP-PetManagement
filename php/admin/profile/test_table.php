@@ -1,7 +1,7 @@
 <?php 
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
+$conn = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
 include('../../connect.php');
-$result = mysqli_query($connect, "SELECT * FROM `staff`")
+$result = mysqli_query($conn, "SELECT * FROM `staff`")
     or die($mysqli->error);
 
 ?>

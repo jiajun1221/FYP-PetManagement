@@ -4,7 +4,7 @@ include '../../connect.php';
 
 
 if (isset($_POST['submit'])) {
-    $result2 = mysqli_query($connect, "SELECT MAX(`serviceID`) as `id` FROM `service`")
+    $result2 = mysqli_query($conn, "SELECT MAX(`serviceID`) as `id` FROM `service`")
         or die($mysqli->error);
 
     while ($row = $result2->fetch_assoc()) {
@@ -31,25 +31,13 @@ if (isset($_POST['submit'])) {
     }
 
 
-    mysqli_query($connect, "INSERT INTO `grooming`(groomingID,GserviceID,groomingInfo,groomingDesc) VALUES('$groomingID','$serviceID','$groomingInfo','$groomingDesc')");
-    mysqli_query($connect, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
-        or die($connect->error);
-    $fp = fopen("testing.txt", "w");
-    $write["pt"] = $petType;
-    $write["GI"] = $groomingInfo;
-    $write["post"] = $_POST;
-    $write["price"] = $price;
-    $write["query"] = "INSERT INTO `grooming`(groomingID,GserviceID,groomingInfo,groomingDesc) VALUES('$groomingID','$serviceID','$groomingInfo','$groomingDesc')";
-    fwrite($fp, print_r($write, true));
-    fclose($fp);
-
-
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "Success";
-
-    header('location:viewService.php');
+    mysqli_query($conn, "INSERT INTO `grooming`(groomingID,GserviceID,groomingInfo,groomingDesc) VALUES('$groomingID','$serviceID','$groomingInfo','$groomingDesc')");
+    mysqli_query($conn, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
+        or die($conn->error);
+        echo "<script>alert('Record has been added');</script>";
+        echo "<script>window.location.assign('viewService.php');</script>";
 }
-$result = mysqli_query($connect, "SELECT * FROM  inventory")
+$result = mysqli_query($conn, "SELECT * FROM  inventory")
     or die($mysqli->error);
 
 include '../header.php';

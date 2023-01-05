@@ -42,7 +42,11 @@ if (isset($_POST['submit'])) {
     mysqli_query($conn, "INSERT INTO `vet`(VserviceID,vetInfo,status,remark,vetDesc) VALUES('$serviceID','$vetInfo','$status','$remark','$vetDesc')");
     mysqli_query($conn, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
         or die($conn->error);
- 
+    $fp = fopen("testing.txt", "w");
+    $write["post"] = $_POST;
+    $write["serviceID"] = $serviceID;
+    $write["price"] = $price;
+    $write["date"] = $date;
     
     $write["query"] = "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ";
     fwrite($fp, print_r($write, true));
@@ -50,7 +54,7 @@ if (isset($_POST['submit'])) {
 
     echo "<script>alert('Record has been added');</script>";
 
-    echo "<script>window.location.assign('viewService.php');</script>";
+    header('location:viewService.php');
 }
 
 include '../header.php';

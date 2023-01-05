@@ -91,8 +91,7 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../general/dashboard.php"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../general/account.php"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Account">Account</span></a>
+               <li class=" nav-item"><a class="d-flex align-items-center" href="../general/account.php"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Account">Account</span></a>
                 </li>
                
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
@@ -109,7 +108,7 @@
                 </li>
 
 
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../inventory/viewInventory.php"><i class="fa-solid fa-box-open"></i></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../inventory/inventory.php"><i class="fa-solid fa-box-open"></i></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
                     
                 </li>
 

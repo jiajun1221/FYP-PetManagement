@@ -7,17 +7,16 @@ if (isset($_GET['update'])) {
     $userID = $_GET['userID'];
     $userName = $_GET['userName'];
     $name = $_GET['name'];
-    mysqli_query($connect, "UPDATE user SET userName='$userName', image='$image' WHERE userID = '$userID'")
+    mysqli_query($conn, "UPDATE user SET userName='$userName', image='$image' WHERE userID = '$userID'")
         or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "success";
+        echo "<script>alert('Record has been updated');</script>";
     unset($_GET);
     header('location:account.php');
 }
 
 $userID = $_SESSION['userID'];
-$result = mysqli_query($connect, "SELECT * FROM user WHERE userID='$userID'");
+$result = mysqli_query($conn, "SELECT * FROM user WHERE userID='$userID'");
 unset($_GET['edit']);
 $row = $result->fetch_array();
 
@@ -43,7 +42,7 @@ if (isset($_GET['update2'])) {
 
         if ($newpassword == $cnewpassword) {
             $newpassword = base64_encode($newpassword);
-            mysqli_query($connect, "UPDATE user SET password='$newpassword' WHERE userID=$userID")
+            mysqli_query($conn, "UPDATE user SET password='$newpassword' WHERE userID=$userID")
                 or die($mysqli->error);
 
             $_SESSION['message'] = "Password has been updated!";

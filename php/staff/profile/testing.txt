@@ -2,30 +2,30 @@ Array
 (
     [update] => Array
         (
-            [petID] => 3
-            [birthdate] => 2018-01-10
+            [petID] => 4
+            [birthdate] => 2020-01-09
             [gender] => Female
-            [species] => Bobtail
-            [color] => White
-            [weight] => 4
-            [owner] => 6
-            [status] => Healthy
-            [remark] => Healthy
+            [species] => Siamese
+            [color] => B&W
+            [weight] => 3
+            [owner] => 17
+            [status] => ...
+            [remark] => 
             [update] => 
         )
 
-    [query] => UPDATE pet SET status='Healthy', remark='Healthy' WHERE petID = '3'
+    [query] => UPDATE pet SET status='...', remark='' WHERE petID = '4'
     [status] => Array
         (
-            [petID] => 3
-            [birthdate] => 2018-01-10
+            [petID] => 4
+            [birthdate] => 2020-01-09
             [gender] => Female
-            [species] => Bobtail
-            [color] => White
-            [weight] => 4
-            [owner] => 6
-            [status] => Healthy
-            [remark] => Healthy
+            [species] => Siamese
+            [color] => B&W
+            [weight] => 3
+            [owner] => 17
+            [status] => ...
+            [remark] => 
             [update] => 
         )
 

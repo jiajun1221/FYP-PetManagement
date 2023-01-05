@@ -1,19 +1,18 @@
 <?php include '../header.php';
 
-include 'connect.php';
+include '../../connect.php';
 
-// if (isset($_GET['delete'])) {
-//     $id = $_GET['delete'];
-//     mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
-//     unset($_GET['delete']);
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
+    unset($_GET['delete']);
 
-//     $_SESSION['message'] = "Record has been Deleted";
-//     $_SESSION['msg_type'] = "danger";
-// }
+   echo "<script>alert('Record has been deleted');</script>";
+}
 
 
-// $result = mysqli_query($connect, "SELECT * FROM inventory")
-//     or die($mysqli->error);
+$result = mysqli_query($conn, "SELECT * FROM inventory")
+    or die($mysqli->error);
 
 
 //pre_r($result);
@@ -27,17 +26,6 @@ function pre_r($array)
 }
 
 ?>
-
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>	
-
-		<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-		
-
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-				integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-				crossorigin="anonymous"></script>
-		 
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 
 <!-- BEGIN: Content-->
 <div class="app-content content ">
@@ -71,7 +59,7 @@ function pre_r($array)
                             <div class="col-12">
                                 <div class="card">
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                                        <div class="card-header     border-bottom p-1" bis_skin_checked="1">
+                                        <div class="card-header border-bottom p-1" bis_skin_checked="1">
                                             <div class="head-label" bis_skin_checked="1">
                                                 <h4 class="mb-0">Products List</h4>
                                             </div>
@@ -79,11 +67,11 @@ function pre_r($array)
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
 
-                                            <!-- <div class="col-sm-12 col-md-6" bis_skin_checked="1">
+                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
                                                 <div id="DataTables_Table_0_filter" class="dataTables_filter" bis_skin_checked="1"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label>
                                                     <a><i class="searchicon" data-feather="search"></i></a></li>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <div class="col-sm-12 col-md-6" bis_skin_checked="1">
                                                 <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addProduct.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
                                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -92,71 +80,48 @@ function pre_r($array)
                                                 </div>
                                             </div>
                                         </div>
+                                        <table class="datatables-basic table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1205px;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Item ID</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Name</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Type</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Quantity</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Expiry Date</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">sellingprice</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Unit Price</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                while ($user_info = $result->fetch_assoc()) :
+                                                    $categoryID = $user_info['itemType'];
+                                                    $result2 = mysqli_query($conn, "SELECT * FROM category WHERE categoryID ='$categoryID'");
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $user_info['itemID']; ?></td>
+                                                        <td><?php echo $user_info['itemName']; ?></td>
+                                                        <td><?php while ($user_info2 = $result2->fetch_assoc()) {
+                                                                echo $user_info2['categoryName'];
+                                                            } ?></td>
+                                                        <td><?php echo $user_info['quantity']; ?></td>
+                                                        <td><?php echo $user_info['expiryDate']; ?></td>
+                                                        <td><?php echo $user_info['sellingprice']; ?></td>
+                                                        <td><?php echo $user_info['unitprice']; ?></td>
 
-                                        <table class="table table-bordered" id="do_table" >
-							<thead>
-								<tr>
-									<th>
-										#
-									</th>
-									<th width="1%">
-										PO Number
-									</th>
-									<th>
-                                        Supplier
-									</th>
-									<th>
-										PO date
-									</th>
-									<th>
-										Status
-									</th>
-									<th width="15%">
-										Action
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								 <?php 
+                                                        <td><a href="editProduct.php?edit=<?php echo $user_info['itemID']; ?>">
+                                                                <button class="btn-primary">Edit</button></a>
+                                                            <a href="viewProduct.php?delete=<?php echo $user_info['itemID']; ?>">
+                                                                <button class="btn-outline-secondary">Delete</button></a>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                endwhile; ?>
+                                            </tbody>
 
-                                 $i=0;
-								//  include 'connect.php';
-	
-                                 $sql = "SELECT * FROM `delivery_order` WHERE `status` = 1 ORDER BY `delivery_order`.`ID` DESC";
-								//  $quantity = "SELECT COUNT(`product`) AS total FROM `delivery_order_detail` WHERE `DID`";
-								 $result = $conn->query($sql);
-								//  $result1 = $conn->query($quantity);
-								//  $row1 = $result1 -> fetch_array(MYSQLI_ASSOC);
-                      			// 	$a = $row1;
-								 while ($row = $result->fetch_assoc()) {
-
-								 	echo "<tr>
-								 	<td>".++$i."</td>
-								 	<td>".$row["ID"]."</td>
-								 	<td>".$row["supplier"]."</td>
-									<td>".date("d/m/Y",strtotime($row["do_date"]))."</td>
-									<td>";
-									if ($row["status"] == 0) {
-                                            echo "Preparing";                
-                                            }
-                                        elseif ($row["status"] == 1) {
-                                            echo "preparing";
-                                            }
-                                        elseif ($row["status"] == 2) {
-                                            echo "Completed";
-                                            # code...
-                                        }
-                                    echo "</td>
-									<td><a class='text-white btn btn-primary' style='text-decoration: none;' href='view_do.php?ID=".$row["ID"]."'>View</a>
-									</td>";
-								 	echo "</tr>";
-								 	# code...
-								 }
-								 echo "</table>";
-								 ?>
-							</tbody>
-							
-						
+                                        </table>
 
                                         <div class="d-flex justify-content-between mx-0 row">
 
@@ -204,23 +169,3 @@ function pre_r($array)
 <!-- END: Page Vendor JS-->
 
 </html>
-
-<script>
-
-
-$(document).ready( function () {
-    $('#do_table').DataTable({
-
-		"bInfo" : false,
-		"order":[],
-		"columnDefs":[
-			{
-				"targets":[0,2,3,4,5],
-				"orderable":false,
-			},
-		],
-	});
-	
-} );
-
-</script>

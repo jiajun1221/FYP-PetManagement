@@ -8,7 +8,7 @@ if (isset($_POST['submit1'])) {
     $price = $_POST['price'];
     $quantity = $_POST['quantity'];
     $media = $_POST['mediaID'];
-    mysqli_query($connect, "INSERT INTO order(orderName,orderType,price,quantity,mediaID) VALUES('$orderName','$orderType','$price','$quantity','$mediaID')")
+    mysqli_query($conn, "INSERT INTO order(orderName,orderType,price,quantity,mediaID) VALUES('$orderName','$orderType','$price','$quantity','$mediaID')")
         or die($mysqli->error);
 
     $_SESSION['message'] = "Record has been Saved!";
@@ -19,7 +19,7 @@ if (isset($_POST['submit1'])) {
 }
 
 
-$result = mysqli_query($connect, "SELECT * FROM inventory")
+$result = mysqli_query($conn, "SELECT * FROM inventory")
     or die($mysqli->error);
 
 //pre_r($result);

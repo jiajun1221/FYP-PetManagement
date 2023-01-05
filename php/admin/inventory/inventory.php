@@ -1,14 +1,13 @@
 <?php include '../header.php';
 
-include './../order/connect.php';
+include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
+    mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
 function pre_r($array)
@@ -102,7 +101,7 @@ function pre_r($array)
 
                                                     <?php
 
-                                                    // include './../order/connect.php';
+                                                    // include '../../connect.php';
                                                     $i = 1;
                                                     $sql    = "SELECT * FROM inventory 
                 INNER JOIN category 
@@ -122,7 +121,7 @@ function pre_r($array)
                                                         $supplier = $row['supplier'];
                                                         // $date     = date("d/m/Y", strtotime($row["expiryDate"]));
                                                         $unitPrice = $row['unitprice'];
-                                                        $sellingPrice = $row['sellingPrice'];
+                                                        $sellingprice = $row['sellingprice'];
                                                         
 
                                                         # code...
@@ -136,12 +135,12 @@ function pre_r($array)
         <td>  " . $quantity . "</td>
         <td>  " . $supplier . "</td>
         <td>  " . "RM" . $unitPrice . "</td>
-        <td>  " . "RM" . $sellingPrice . "</td>
-        <td>" . "<a  href='editProduct.php?edit=".$row["itemID"] . "'<span class='material-icons-outlined'></span> Edit</a>" . "
-               <a  href='inventory.php?delete=".$row["itemID"] . "'<span class='material-icons-outlined'></span> Delete</a>" . "
+        <td>  " . "RM" . $sellingprice . "</td>
+        <td>" . "<a  href='editProduct.php?edit=".$row["itemID"] . "'<span class='btn-sm btn-primary waves-effect material-icons-outlined'></span> Edit</a>" . "
+               <a  href='inventory.php?delete=".$row["itemID"] . "'<span class='btn-sm btn-danger waves-effect material-icons-outlined'></span> Delete</a>" . "
         </td>";
 
-                                                        // <td>"."<a  href='product_view.php? ID=".$row["itemID "] ."'<span class='material-icons-outlined'></span> View</a>"."</td>";
+                                                        // <td>"."<a  href='product_view.php? ID=".$row["itemID "] ."'<span class='btn-sm btn-primary waves-effect material-icons-outlined'></span> View</a>"."</td>";
 
                                                         "</tr>";
                                                     }

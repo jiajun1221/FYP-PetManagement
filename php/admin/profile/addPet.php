@@ -49,13 +49,11 @@ if (isset($_POST['submit'])) {
 
     move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-    mysqli_query($connect, "INSERT INTO `pet`(petName,petType,gender,species,birthdate,color,weight,owner,image) VALUES('$petName','$petType','$gender','$species','$birthdate','$color','$weight','$owner','$image')");
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "Success";
-
-    header('location:viewPet.php');
+    mysqli_query($conn, "INSERT INTO `pet`(petName,petType,gender,species,birthdate,color,weight,owner,image) VALUES('$petName','$petType','$gender','$species','$birthdate','$color','$weight','$owner','$image')");
+    echo '<script>alert("New Record has been Added")</script>';
+    echo "<script>window.location.assign('viewPet.php');</script>";
 }
-$result = mysqli_query($connect, "SELECT * FROM  customer")
+$result = mysqli_query($conn, "SELECT * FROM  customer")
     or die($mysqli->error);
 
 

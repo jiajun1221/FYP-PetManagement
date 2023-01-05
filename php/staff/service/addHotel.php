@@ -2,26 +2,46 @@
 
 include '../../connect.php';
 
-if (isset($_POST['submit'])) {
-    $petID = $_POST['petID'];
-    $serviceID = $_POST['serviceID'];
-    $serviceType = $_POST['serviceType'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $price = $_POST['price'];
 
-    mysqli_query($connect, "INSERT INTO `service`(serviceID,serviceType,date,time,price) VALUES('$serviceID','$serviceType','$date','$time','$price')");
-    $fp = fopen("testing.txt", "w");
-    $write["userID"] = $_POST;
-    $write["result"] = $_POST;
-    fwrite($fp, print_r($write, true));
-    fclose($fp);
+$result2 = mysqli_query($conn, "SELECT MAX(`serviceID`) as `id` FROM `service`")
+or die($mysqli->error);
 
-    $_SESSION['message'] = "Record has been Saved!";
-    $_SESSION['msg_type'] = "Success";
-
-    header('location:viewService.php');
+while ($row = $result2->fetch_assoc()) { 
+    $serviceID = $row['id'];
 }
+
+$result3 = mysqli_query($conn, "SELECT * FROM `service` Where serviceID = '$serviceID'")
+or die($mysqli->error);
+
+while ($row = $result3->fetch_assoc()) {
+    $service_result = $row;
+}
+
+if (isset($_POST['submit'])) {
+   
+    // $hotelID = $_POST['hotelID'];
+    $petType = $_POST['petType'];
+    $startDate = $_POST['date'];
+    $hotelDesc = $_POST['hotelDesc'];
+    $endDate = $_POST['endDate'];
+    $duration = $_POST['duration'];
+
+
+    if ($petType == "Dog") {
+        $price= $duration * 40 ;
+    } else if ($petType == "Cat") {
+        $price = $duration * 35;
+    }
+
+    mysqli_query($conn, "INSERT INTO `hotel`(HserviceID,hotelDesc,startDate,endDate,duration) VALUES('$serviceID','$hotelDesc','$startDate','$endDate','$duration')");
+    mysqli_query($conn, "UPDATE `service` SET price='$price' WHERE serviceID = '$serviceID' ")
+        or die($conn->error);
+    
+
+    echo "<script>alert('Record has been added');</script>";
+    echo "<script>window.location.assign('viewService.php');</script>";
+}
+
 
 
 include '../header.php';
@@ -50,6 +70,7 @@ include '../header.php';
                     </div>
                 </div>
             </div>
+           
         </div>
         <div class="content-body">
             <!-- Basic Horizontal form layout section start -->
@@ -61,13 +82,13 @@ include '../header.php';
                                 <h4 class="card-title">Add Hotel Service</h4>
                             </div>
                             <div class="card-body">
-                                <form class="form form-horizontal" method="POST" action="addService.php">
+                                <form class="form form-horizontal" method="POST">
                                     <div class="row">
 
                                         <div class="col-12"><br>
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="serviceType">Pet Type</label>
+                                                    <label for="hotelType">Pet Type</label>
                                                 </div>
                                                 <div class="col-sm-9">
                                                     <div class="demo-inline-spacing">
@@ -92,7 +113,7 @@ include '../header.php';
                                                     <label for="date">Start Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input name="date" id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
+                                                    <input name="date" id="datefield" type='date' min='1899-01-01' max='2000-13-13' value="<?php echo $service_result['date'] ?>" readonly></input>
 
                                                 </div>
                                             </div>
@@ -101,10 +122,10 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="date">End Date</label>
+                                                    <label for="endDate">End Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input name="date" id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
+                                                    <input name="endDate" id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +136,7 @@ include '../header.php';
                                                     <label for="duration">Duration (Days)</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="duration" class="form-control" name="duration" placeholder="1-3" readonly />
+                                                    <input type="text" id="duration" class="form-control" name="duration" placeholder="1-3"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,32 +144,10 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="price">Meal Offered (Quantity)</label>
+                                                    <label for="hotelDesc">Remark</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="price" class="form-control" name="price" placeholder="3" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="date">Remark</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <textarea name="remark" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="price">Total price (RM)</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="text" id="price" class="form-control" name="price" placeholder="99.99" readonly />
+                                                    <textarea name="hotelDesc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                                 </div>
                                             </div>
                                         </div>

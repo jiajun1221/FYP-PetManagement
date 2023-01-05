@@ -2,12 +2,12 @@ Array
 (
     [post] => Array
         (
-            [userEmail] => kevenchng1221@gmail.com
-            [password] => 12345
+            [userEmail] => staff123@gmail.com
+            [password] => 123456
             [signin] => 
         )
 
-    [query] => SELECT * FROM user WHERE userEmail='kevenchng1221@gmail.com' AND password='MTIzNDU='
+    [query] => SELECT * FROM user WHERE userEmail='staff123@gmail.com' AND password='MTIzNDU2'
     [result] => mysqli_result Object
         (
             [current_field] => 0

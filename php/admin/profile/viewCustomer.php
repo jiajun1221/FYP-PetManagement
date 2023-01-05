@@ -1,23 +1,41 @@
-<?php
+<?php include '../header.php';
 
-include('../header.php');
-$connect = mysqli_connect("localhost", "root", "", "petcare") or die(mysqli_error($mysqli));
-include('../../connect.php');
+include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM `customer` WHERE customerID=$id");
+
+
+
+    mysqli_query($conn, "DELETE FROM customer WHERE customerID=$id");
     unset($_GET['delete']);
-
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+    echo '<script>alert("Record has been Deleted")</script>';
+    echo "<script>window.location.assign('viewCustomer.php');</script>";
 }
+// $('.btn-del').on('click', function(e) {
+//     e.preventDefault();
+//     const href = $(this).attr('href')
 
-$result = mysqli_query($connect, "SELECT * FROM `customer`")
-    or die($mysqli->error);
+//     Swal.fire({
+//         title: 'Are you sure?',
+//         text: "You won't be able to revert this!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Yes, delete it!'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+          
+//             Swal.fire(
+//                 'Deleted!',
+//                 'Your file has been deleted.',
+//                 'success'
+//             )
+//         }
+//     })
 
-//pre_r($result);
-//pre_r($result->fetch_assoc());
+// }
 
 function pre_r($array)
 {
@@ -25,97 +43,141 @@ function pre_r($array)
     print_r($array);
     echo '</pre>';
 }
-?>
-<!-- BEGIN: Content-->
-<div class="app-content content " bis_skin_checked="1">
-    <div class="content-overlay" bis_skin_checked="1"></div>
-    <div class="header-navbar-shadow" bis_skin_checked="1"></div>
-    <div class="content-wrapper" bis_skin_checked="1">
-        <div class="content-body" bis_skin_checked="1">
-            <!-- Basic Horizontal form layout section start -->
-            <div class="content-wrapper" bis_skin_checked="1">
-                <div class="content-header row" bis_skin_checked="1">
-                    <div class="content-header-left col-md-9 col-12 mb-2" bis_skin_checked="1">
-                        <div class="row breadcrumbs-top" bis_skin_checked="1">
-                            <div class="col-12" bis_skin_checked="1">
-                                <h2 class="content-header-title float-left mb-0">Profile</h2>
 
+?>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-body">
+            <!-- Basic Horizontal form layout section start -->
+            <div class="content-wrapper">
+                <div class="content-header row">
+                    <div class="content-header-left col-md-9 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="col-12">
+                                <h2 class="content-header-title float-left mb-0">Customer Page</h2>
+                                <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Profile</a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#">Customer</a>
+                                        </li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="content-body" bis_skin_checked="1">
+                <div class="content-body">
                     <!-- Basic table -->
                     <section id="basic-datatable">
-                        <div class="row" bis_skin_checked="1">
-                            <div class="col-12" bis_skin_checked="1">
-                                <div class="card" bis_skin_checked="1">
-                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer" bis_skin_checked="1">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                                         <div class="card-header border-bottom p-1" bis_skin_checked="1">
                                             <div class="head-label" bis_skin_checked="1">
                                                 <h4 class="mb-0">Customer List</h4>
-                                                
                                             </div>
 
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
+                                        </div><br>
+                                        <!-- table  starts-->
+                                        <div class="content-header-center col-12">
+                                             <div class="d-flex justify-content-between align-items-center mx-0 row" bis_skin_checked="1">
 
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div id="DataTables_Table_0_filter" class="dataTables_filter" bis_skin_checked="1"><label>Search:<input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0"></label> 
-                                                <a><i class="searchicon" data-feather="search"></i></a></li></div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addCustomer.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
-                                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                                </svg>Add New Record</span></button></a>
+                                                <div class="col-sm-12 col-md-6" bis_skin_checked="1">
+                                                    <br>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6" bis_skin_checked="1">
+                                                    <div class="dt-action-buttons text-right" bis_skin_checked="1"><a href="addCustomer.php"><button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-toggle="modal" data-target="#modals-slide-in"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-50 font-small-4">
+                                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                    </svg>Add New Record</span></button></a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <table class="datatables-basic table dataTable no-footer dtr-column" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1205px;">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 35px; display: none;" aria-label=""></th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Email: activate to sort column ascending">Customer ID</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 180px;" aria-label="Date: activate to sort column ascending">Customer Name</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 134px;" aria-label="Date: activate to sort column ascending">Gender</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 170px;" aria-label="Salary: activate to sort column ascending">Email</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 140px;" aria-label="Status: activate to sort column ascending">Contact</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 230px;" aria-label="Status: activate to sort column ascending">Address</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 150px;" aria-label="Status: activate to sort column ascending">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                while ($user_info = $result->fetch_assoc()) : {
-                                                ?>
-                                                        <tr>
-                                                            <td><?php echo $user_info['customerID']; ?></td>
-                                                            <td><?php echo $user_info['customerName']; ?></td>
-                                                            <td><?php echo $user_info['gender']; ?></td>
-                                                            <td><?php echo $user_info['email']; ?></td>
-                                                            <td><?php echo $user_info['contact']; ?></td>
-                                                            <td><?php echo $user_info['address']; ?></td>
-                                                            <td><a href="editCustomer.php?edit=<?php echo $user_info['customerID']; ?>">
-                                                                    <button class="btn-primary">Edit</button></a>
-                                                                <a href="viewCustomer.php?delete=<?php echo $user_info['customerID']; ?>">
-                                                                    <button class="btn-outline-secondary">Delete</button></a>
-                                                            </td>
-                                                        </tr>
-                                                <?php
+                                           
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="do_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Customer Name</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Contact</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <?php
+
+                                                    // include '../../connect.php';
+                                                    $i = 1;
+                                                    $sql    = "SELECT * FROM customer";
+                                                    $result = $conn->query($sql);
+
+                                                    while ($row = $result->fetch_assoc()) {
+
+                                                        $name     = $row['customerName'];
+                                                        $gender = $row['gender'];
+                                                        $email = $row['email'];
+                                                        $contact = $row['contact'];
+                                                        $address = $row['address'];
+                                                        
+
+                                                        # code...
+
+
+                                                        echo "
+        <tr>
+        <td>  " . $i++ . "</td>
+        <td>  " . $name . "</td>
+        <td>  " . $gender . "</td>
+        <td>  " . $email . "</td>
+        <td>  " . $contact . "</td>
+        <td>  " . $address . "</td>
+        <td>" . "<a  href='editCustomer.php?edit=".$row["customerID"] . "'<span class='btn-sm btn-primary waves-effect material-icons-outlined'></span> Edit</a>" . "
+               <a  href='viewCustomer.php?delete=".$row["customerID"] . "'<span class='btn-sm btn-danger waves-effect material-icons-outlined'></span> Delete</a>" . "
+        </td>";
+
+                                                        // <td>"."<a  href='product_view.php? ID=".$row["itemID "] ."'<span class='btn-sm btn-primary waves-effect material-icons-outlined'></span> View</a>outlined'></span> Delete</a>"."</td>";
+
+                                                        "</tr>";
                                                     }
-                                                endwhile; ?>
-                                            </tbody>
-                                        </table>
-                                        <div class="d-flex justify-content-between mx-0 row" bis_skin_checked="1">
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite" bis_skin_checked="1"></div>
+                                                    echo "</table>"
+
+                                                    ?>
+
+
+
+                                        </div>
+</div>
+                                        <!-- table ends -->
+                                        <div class="d-flex justify-content-between mx-0 row">
+
+                                            <div class="col-sm-12 col-md-6">
+
+
                                             </div>
-                                            <div class="col-sm-12 col-md-6" bis_skin_checked="1">
-                                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate" bis_skin_checked="1">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                                                     <ul class="pagination">
-                                                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">&nbsp;</a></li>
-                                                        <li class="paginate_button page-item next disabled" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">&nbsp;</a></li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -125,7 +187,6 @@ function pre_r($array)
                             </div>
                         </div>
 
-                    </section>
                 </div>
             </div>
 
@@ -139,7 +200,7 @@ function pre_r($array)
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    
+
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 <!-- END: Footer-->
@@ -153,3 +214,18 @@ function pre_r($array)
 <!-- END: Page Vendor JS-->
 
 </html>
+
+<script>
+    $(document).ready(function() {
+        $('#do_table').DataTable({
+
+            "bInfo": false,
+            "order": [],
+            "columnDefs": [{
+                "targets": [0, 1, 2, 3, 4, 5],
+                "orderable": true,
+            }, ],
+        });
+
+    });
+</script>

@@ -1,4 +1,4 @@
-<?php $result = mysqli_query($connect, "SELECT * FROM `user`")
+<?php $result = mysqli_query($conn, "SELECT * FROM `user`")
     or die($mysqli->error);
 ?>
 

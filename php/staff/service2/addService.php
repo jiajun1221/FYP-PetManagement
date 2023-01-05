@@ -175,5 +175,5 @@ include '../header.php';
     }
 
     today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("datefield").setAttribute(today);
+    document.getElementById("datefield").setAttribute("max", today);
 </script>

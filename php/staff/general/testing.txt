@@ -6,9 +6,9 @@ Array
             [field_count] => 8
             [lengths] => Array
                 (
-                    [0] => 3
+                    [0] => 1
                     [1] => 6
-                    [2] => 19
+                    [2] => 18
                     [3] => 8
                     [4] => 5
                     [5] => 1
@@ -22,14 +22,14 @@ Array
 
     [row] => Array
         (
-            [0] => 116
-            [userID] => 116
-            [1] => YuSeng
-            [userName] => YuSeng
-            [2] => yuseng123@gmail.com
-            [userEmail] => yuseng123@gmail.com
-            [3] => MTIzNDU=
-            [password] => MTIzNDU=
+            [0] => 2
+            [userID] => 2
+            [1] => Sengzi
+            [userName] => Sengzi
+            [2] => staff123@gmail.com
+            [userEmail] => staff123@gmail.com
+            [3] => MTIzNDU2
+            [password] => MTIzNDU2
             [4] => staff
             [userGroup] => staff
             [5] => 0
@@ -40,5 +40,5 @@ Array
             [image] => 
         )
 
-    [query] => SELECT * FROM user WHERE userID='116'
+    [query] => SELECT * FROM user WHERE userID='2'
 )

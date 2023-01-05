@@ -8,11 +8,11 @@ if (isset($_POST['update'])) {
     $quantity = $_POST['quantity'];
     $expiryDate = $_POST['expiryDate'];
     $label = $_POST['label'];
-    $sellingPrice = $_POST['sellingPrice'];
+    $sellingprice = $_POST['sellingprice'];
     $unitprice = $_POST['unitprice'];
     $image =  $_FILES["image"]["name"];
-    mysqli_query($connect, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', sellingPrice = '$sellingPrice', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
-        or die($connect->error);
+    mysqli_query($conn, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', sellingprice = '$sellingprice', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
+        or die($conn->error);
 
     $target_dir = "../../../app-assets/img/product/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
@@ -58,7 +58,7 @@ if (isset($_POST['update'])) {
 
 if (isset($_GET['edit'])) {
     $itemID = $_GET['edit'];
-    $result = mysqli_query($connect, "SELECT * FROM inventory WHERE itemID=$itemID");
+    $result = mysqli_query($conn, "SELECT * FROM inventory WHERE itemID=$itemID");
     unset($_GET['edit']);
     $row = $result->fetch_array();
     $itemName = $row['itemName'];
@@ -66,14 +66,14 @@ if (isset($_GET['edit'])) {
     $quantity = $row['quantity'];
     $expiryDate = $row['expiryDate'];
     $label = $row['label'];
-    $sellingPrice = $row['sellingPrice'];
+    $sellingprice = $row['sellingprice'];
     $unitprice = $row['unitprice'];
 
     $_SESSION['message'] = "Record has been Saved";
     $_SESSION['msg_type'] = "success";
 }
 
-$result = mysqli_query($connect, "SELECT * FROM  category")
+$result = mysqli_query($conn, "SELECT * FROM  category")
     or die($mysqli->error);
 
 include '../header.php';
@@ -118,7 +118,7 @@ include '../header.php';
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Add Item</h4>
+                                <h4 class="card-title">Edit Item</h4>
                             </div>
 
                             <div class="card-body">
@@ -162,6 +162,18 @@ include '../header.php';
                                             </div>
                                         </div>
 
+                                        
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="sellingprice">Selling Price</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="sellingprice" id="sellingprice" class="form-control" name="sellingprice" value="<?php echo $sellingprice ?>" />
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
@@ -196,16 +208,6 @@ include '../header.php';
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="sellingPrice">sellingPrice</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="sellingPrice" id="sellingPrice" class="form-control" name="sellingPrice" value="<?php echo $sellingPrice ?>" />
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <!-- <div class="col-12">
                                             <div class="form-group row">

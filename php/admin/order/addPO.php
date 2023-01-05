@@ -12,7 +12,7 @@ include '../../connect.php';
 //         $orderItem = $_POST['orderItem'];
 //         $qty = $_POST['qty'];
 
-//         mysqli_query($connect, "INSERT INTO `order`(orderItem,orderDate,qty,supplier,status) VALUES('$orderItem','$orderDate','$qty','$supplier','$status')");
+//         mysqli_query($conn, "INSERT INTO `order`(orderItem,orderDate,qty,supplier,status) VALUES('$orderItem','$orderDate','$qty','$supplier','$status')");
 //         $_SESSION['message'] = "Record has been Saved!";
 //         $_SESSION['msg_type'] = "Success";
 
@@ -30,7 +30,7 @@ include '../../connect.php';
 
 // if (isset($_GET['delete'])) {
 //     $id = $_GET['delete'];
-//     mysqli_query($connect, "DELETE FROM inventory WHERE orderItem=$id");
+//     mysqli_query($conn, "DELETE FROM inventory WHERE orderItem=$id");
 //     unset($_GET['delete']);
 
 //     $_SESSION['message'] = "Record has been Deleted";
@@ -38,9 +38,9 @@ include '../../connect.php';
 // }
 
 
-$result = mysqli_query($connect, "SELECT * FROM inventory")
+$result = mysqli_query($conn, "SELECT * FROM inventory")
   or die($mysqli->error);
-$result2 = mysqli_query($connect, "SELECT * FROM supplier")
+$result2 = mysqli_query($conn, "SELECT * FROM supplier")
   or die($mysqli->error);
 
 
@@ -196,11 +196,13 @@ function pre_r($array)
                                       <td>1</td>
                                       <td>
                                         <select class="form-control" name="orderItem[]">
+                                        <option class="placeholder" value="..."></option>
                                           <?php while ($row = $result->fetch_assoc()) {
                                             $name = $row['itemName']; ?>
                                             <option class="placeholder" value="<?php echo $name ?>"><?php echo $name; ?></option>
                                           <?php } ?>
-                                        </select></td>
+                                        </select>
+                                      </td>
                                       <td><input type="text" name='quantity[]' placeholder='0' class="form-control quantity" maxlength="6" data-filter='[0-9|]*'></td>
                                       <td><input type="text" name='price[]' placeholder='00.00' class="form-control price" step="0.00" min="0" data-filter='[0-9|.]*'></td>
                                       <td><input type="text" name='total[]' placeholder='00.00' class="form-control total" readonly></td>
@@ -252,7 +254,7 @@ function pre_r($array)
                             </div>
                             <div>
 
-                              <button type="submit" style="margin:20px"class="btn btn-primary" name="register_btn">Create Purchase Order</button>
+                              <button type="submit" style="margin:20px" class="btn btn-primary" name="register_btn">Create Purchase Order</button>
                             </div>
                           </div>
                         </div>
@@ -315,6 +317,31 @@ function pre_r($array)
 <script>
   $(document).ready(function() {
 
+    $("#tab_logic").on('change', 'select[name="orderItem[]"]', function() {
+      var id = $(this).parent().parent().attr("id").replace("addr", "");
+      var selected_item = $(this).val();
+
+      console.log(id);
+      console.log(selected_item);
+
+      //Ajax to retrieve the price 
+      $.ajax({
+        url: "loadPrice.php",
+        type: 'POST',
+        data: {
+          orderItem: selected_item
+        },
+        dataType: 'json',
+        success: function(price) {
+          $('#addr' + id + ' td input[name="price[]"]').val(price);
+          // $('#price').html('Price: RM'+ price)
+        },
+        error: function(request, status, error) {
+          console.log(request.responseText);
+        }
+      });
+    });
+
     //  let today = new Date().toLocaleDateString().substr(0, 10);
     //   document.querySelector("#today").value = today;
     //add row function
@@ -345,6 +372,8 @@ function pre_r($array)
 
 
   });
+
+
 
   function calc() {
     $('#tab_logic tbody tr').each(function(i, element) {

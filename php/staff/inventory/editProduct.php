@@ -1,20 +1,19 @@
 <?php
 
 include '../../connect.php';
-
-if (isset($_POST['submit1'])) {
-    $itemID = $_POST['itemID'];
+if (isset($_POST['update'])) {
+    $itemID = $_GET['edit'];
     $itemName = $_POST['itemName'];
     $itemType = $_POST['itemType'];
     $quantity = $_POST['quantity'];
-    $supplier = $_POST['supplier'];
     $expiryDate = $_POST['expiryDate'];
     $label = $_POST['label'];
     $sellingprice = $_POST['sellingprice'];
     $unitprice = $_POST['unitprice'];
     $image =  $_FILES["image"]["name"];
-    mysqli_query($conn, "INSERT INTO inventory(itemID,itemName,itemType,quantity,supplier,expiryDate,label,sellingprice,unitprice,image) VALUES('$itemID','$itemName','$itemType','$quantity','$supplier','$expiryDate','$label','$sellingprice','$unitprice','$image')")
-        or die($mysqli->error);
+    mysqli_query($conn, "UPDATE inventory SET itemName='$itemName', itemType='$itemType', quantity = '$quantity', expiryDate = '$expiryDate', label = '$label', sellingprice = '$sellingprice', unitprice = '$unitprice', image = '$image' WHERE itemID = '$itemID' ")
+        or die($conn->error);
+    echo "<script>alert('Record has been updated');</script>";
 
     $target_dir = "../../../app-assets/img/product/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
@@ -58,15 +57,25 @@ if (isset($_POST['submit1'])) {
     header('location:inventory.php');
 }
 
+if (isset($_GET['edit'])) {
+    $itemID = $_GET['edit'];
+    $result = mysqli_query($conn, "SELECT * FROM inventory WHERE itemID=$itemID");
+    unset($_GET['edit']);
+    $row = $result->fetch_array();
+    $itemName = $row['itemName'];
+    $itemType = $row['itemType'];
+    $quantity = $row['quantity'];
+    $expiryDate = $row['expiryDate'];
+    $label = $row['label'];
+    $sellingprice = $row['sellingprice'];
+    $unitprice = $row['unitprice'];
+
+    $_SESSION['message'] = "Record has been Saved";
+    $_SESSION['msg_type'] = "success";
+}
 
 $result = mysqli_query($conn, "SELECT * FROM  category")
     or die($mysqli->error);
-
-    $result2 = mysqli_query($conn, "SELECT * FROM  supplier")
-    or die($mysqli->error);
-
-//pre_r($result);
-//pre_r($result->fetch_assoc());
 
 include '../header.php';
 ?>
@@ -80,14 +89,14 @@ include '../header.php';
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Add Inventory</h2>
+                        <h2 class="content-header-title float-left mb-0">Inventory Page</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Inventory</a>
+                                <li class="breadcrumb-item"><a href="index.html">Stock</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Item</a>
                                 </li>
-                                <li class="breadcrumb-item active">Add Item</a>
+                                <li class="breadcrumb-item active">Edit Item</a>
                                 </li>
                             </ol>
                         </div>
@@ -122,7 +131,7 @@ include '../header.php';
                                                     <label for="itemName">Item Name</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="text" id="itemName" class="form-control" name="itemName" />
+                                                    <input type="text" id="itemName" class="form-control" name="itemName" value="<?php echo $itemName ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -146,29 +155,14 @@ include '../header.php';
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
-                                                    <label for="supplier">Supplier</label>
+                                                    <label for="unitprice">Unit Price</label>
                                                 </div>
-                                                <div class="col-sm-9 col-form-label">
-                                                    <select id="supplier" name="supplier">
-                                                        <?php while ($row = $result2->fetch_assoc()) : ?>
-                                                            <option value="<?php echo $row['supplierName'] ?>">
-                                                                <?php echo $row['supplierName'] ?></option>
-                                                        <?php endwhile; ?>
-                                                    </select>
+                                                <div class="col-sm-9">
+                                                    <input type="unitprice" id="unitprice" class="form-control" name="unitprice" value="<?php echo $unitprice ?>" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="unitprice">Unit Price</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input type="unitprice" id="unitprice" class="form-control" name="unitprice" />
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-12">
                                             <div class="form-group row">
@@ -176,7 +170,7 @@ include '../header.php';
                                                     <label for="sellingprice">Selling Price</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="sellingprice" id="sellingprice" class="form-control" name="sellingprice" />
+                                                    <input type="sellingprice" id="sellingprice" class="form-control" name="sellingprice" value="<?php echo $sellingprice ?>" />
                                                 </div>
                                             </div>
                                         </div>
@@ -187,19 +181,19 @@ include '../header.php';
                                                     <label for="quantity">Quantity</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="quantity" id="quantity" class="form-control" name="quantity" />
+                                                    <input type="quantity" id="quantity" class="form-control" name="quantity" value="<?php echo $quantity ?>" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
                                                     <label for="expiryDate">Expiry Date</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input name="expiryDate" id="datefield" type='date' min='1899-01-01' max='2000-13-13'></input>
+                                                    <input name="expiryDate" id="datefield" type='date' min='1899-01-01' max='2000-13-13' value="<?php echo $expiryDate ?>"></input>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,12 +204,11 @@ include '../header.php';
                                                     <label for="label">Label</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="label" id="label" class="form-control" name="label" />
+                                                    <input type="label" id="label" class="form-control" name="label" value="<?php echo $label ?>" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                       
 
                                         <!-- <div class="col-12">
                                             <div class="form-group row">
@@ -223,7 +216,7 @@ include '../header.php';
                                                     <label for="image">Images</label>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <input type="file" class="form-control" id="image" name="image" required accept="image/jpg, image/png, image/gif, image/jpeg">
+                                                    <input type="file" class="form-control" id="image" name="image" accept="image/jpg, image/png, image/gif, image/jpeg">
                                                 </div>
                                             </div>
                                         </div> -->
@@ -234,7 +227,8 @@ include '../header.php';
                                             </div>
                                         </div>
                                         <div class="col-sm-9 offset-sm-3">
-                                            <button name="submit1" type="submit" class="btn btn-primary mr-1" style="float:right">Submit</button>
+                                            <button name="update" type="submit" class="btn btn-primary mr-1">Update</button>
+                                            <a href="viewProduct.php"><button name="back" type="button" class="btn btn-primary mr-1">Back</button></a>
                                         </div>
                                     </div>
                                 </form>

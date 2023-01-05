@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $staffID = $_POST['staffID'];
     $status = 'pending';
 
-    mysqli_query($connect, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID,staffID,status) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID','$staffID','$status')");
+    mysqli_query($conn, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID,staffID,status) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID','$staffID','$status')");
     $_SESSION['message'] = "Record has been Saved!";
     $_SESSION['msg_type'] = "Success";
 

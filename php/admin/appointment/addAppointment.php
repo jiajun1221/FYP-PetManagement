@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
 
     if (!empty($_POST['appointmentDate']) && empty($_POST['appointmentTime'])) {
         $date = $_POST['appointmentDate'];
-        $result = mysqli_query($connect, "SELECT * FROM appointment where appointmentDate = '$date'")
+        $result = mysqli_query($conn, "SELECT * FROM appointment where appointmentDate = '$date'")
             or die($mysqli->error);
 
         $row = $result->fetch_all();
@@ -26,15 +26,15 @@ if (isset($_POST['submit'])) {
         $petID = $_POST['petID'];
         $appointmentDesc = $_POST['appointmentDesc'];
 
-        mysqli_query($connect, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID,appointmentDesc) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID','$appointmentDesc')");
-        $_SESSION['message'] = "Record has been Saved!";
-        $_SESSION['msg_type'] = "Success";
-
+        mysqli_query($conn, "INSERT INTO `appointment`(appointmentID,appointmentDate,appointmentTime,serviceType,petID,appointmentDesc) VALUES('$appointmentID','$appointmentDate','$appointmentTime','$serviceType','$petID','$appointmentDesc')");
+       
         header('location:viewAppointment.php');
-    }
+        echo '<script>alert("New Record has been Added")</script>';
+   
+         }
 }
 
-$result = mysqli_query($connect, "SELECT * FROM  pet")
+$result = mysqli_query($conn, "SELECT * FROM  pet")
     or die($mysqli->error);
 
 include '../header.php';
@@ -77,7 +77,23 @@ include '../header.php';
                                 <form class="form form-horizontal" id="appoinmentform" method="POST" action="addAppointment.php">
                                     <div class="row">
 
+
+
                                         <div class="col-12"><br>
+                                            <div class="form-group row">
+                                                <div class="col-sm-3 col-form-label">
+                                                    <label for="appointmentDate">Appointment Date</label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input name="appointmentDate" value="<?php echo $date; ?>" id="datefield" type='date'></input>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                       
+
+                                        <div class="col-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-3 col-form-label">
                                                     <label for="petID">Pet ID</label>
@@ -109,18 +125,6 @@ include '../header.php';
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-12">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 col-form-label">
-                                                    <label for="appointmentDate">Appointment Date</label>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <input name="appointmentDate" value="<?php echo $date;?>" id="datefield" type='date'></input>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="col-12">
                                             <div class="form-group row"><br>
                                                 <div class="col-sm-3 col-form-label">
@@ -144,8 +148,8 @@ include '../header.php';
 
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
 
 
                                     <div class="col-sm-9 offset-sm-3">
@@ -153,6 +157,7 @@ include '../header.php';
                                         </div>
                                     </div>
                                     <div class="col-sm-9 offset-sm-3">
+                                        <a href="viewAppointment.php"><button name="back" type="button" class="btn btn-primary mr-1">Back</button></a>
                                         <button name="submit" id="appoint_submit" type="submit" class="btn btn-primary mr-1">Submit</button>
                                     </div>
                             </div>

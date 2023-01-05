@@ -4,15 +4,14 @@ include '../../connect.php';
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
+    mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
     unset($_GET['delete']);
 
-    $_SESSION['message'] = "Record has been Deleted";
-    $_SESSION['msg_type'] = "danger";
+   echo "<script>alert('Record has been deleted');</script>";
 }
 
 
-$result = mysqli_query($connect, "SELECT * FROM inventory")
+$result = mysqli_query($conn, "SELECT * FROM inventory")
     or die($mysqli->error);
 
 
@@ -90,7 +89,7 @@ function pre_r($array)
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 119px;">Item Type</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 80px;">Quantity</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Expiry Date</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">sellingPrice</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 100px;">sellingprice</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Unit Price</th>
                                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 107px;">Action</th>
                                                 </tr>
@@ -99,7 +98,7 @@ function pre_r($array)
                                                 <?php
                                                 while ($user_info = $result->fetch_assoc()) :
                                                     $categoryID = $user_info['itemType'];
-                                                    $result2 = mysqli_query($connect, "SELECT * FROM category WHERE categoryID ='$categoryID'");
+                                                    $result2 = mysqli_query($conn, "SELECT * FROM category WHERE categoryID ='$categoryID'");
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $user_info['itemID']; ?></td>
@@ -109,7 +108,7 @@ function pre_r($array)
                                                             } ?></td>
                                                         <td><?php echo $user_info['quantity']; ?></td>
                                                         <td><?php echo $user_info['expiryDate']; ?></td>
-                                                        <td><?php echo $user_info['sellingPrice']; ?></td>
+                                                        <td><?php echo $user_info['sellingprice']; ?></td>
                                                         <td><?php echo $user_info['unitprice']; ?></td>
 
                                                         <td><a href="editProduct.php?edit=<?php echo $user_info['itemID']; ?>">

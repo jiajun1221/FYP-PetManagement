@@ -43,8 +43,7 @@ if (isset($_POST['submit'])) {
         or die($conn->error);
     
         echo "<script>alert('Record has been added');</script>";
-
-    header('location:viewService.php');
+        echo "<script>window.location.assign('viewService.php');</script>";
 }
 
 

@@ -15,8 +15,8 @@ if (isset($_POST['verify'])) {
         fwrite($fp, print_r($write, true));
         fclose($fp);
 
-        mysqli_query($connect, "UPDATE user SET verification='1' WHERE userID = '$userID' ")
-            or die($connect->error);
+        mysqli_query($conn, "UPDATE user SET verification='1' WHERE userID = '$userID' ")
+            or die($conn->error);
 
         unset($_SESSION);
 ?>

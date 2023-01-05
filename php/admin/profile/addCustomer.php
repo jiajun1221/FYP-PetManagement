@@ -9,24 +9,12 @@ if (isset($_POST['submit'])) {
     $contact = $_POST['contact'];
     $address = $_POST['address'];
 
-    mysqli_query($connect, "INSERT INTO customer(customerName,gender,email,contact,address) VALUES('$customerName','$gender','$email','$contact','$address')");
+    mysqli_query($conn, "INSERT INTO customer(customerName,gender,email,contact,address) VALUES('$customerName','$gender','$email','$contact','$address')");
 
-?><script>
-        toastr['success']('New Record has been successfully added', 'Success!', {
-            closeButton: true,
-            tapToDismiss: false,
-            rtl: isRtl
-        });
-    </script>
-<?php
-    $fp = fopen("testing.txt", "w");
-    $write["userID"] = $_POST;
-    $write["error"] = mysqli_error($connect);
-    $write["query"] = "INSERT INTO `customer`(customerName,gender,email,contact,address) VALUES('$customerName',$gender','$email','$contact','$address')";
-    fwrite($fp, print_r($write, true));
-    fclose($fp);
-
-    header('location:viewCustomer.php');
+    echo '<script>alert("New Record has been Added")</script>';
+    echo "<script>window.location.assign('viewCustomer.php');</script>";
+    
+   
 }
 
 

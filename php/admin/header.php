@@ -25,11 +25,14 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../../../app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
     <script src="../../../app-assets/js/scripts/forms/form-number-input.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <!-- END: Page CSS-->
@@ -98,23 +101,24 @@
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Chat">Profile</span></a>
                     <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="../profile/viewStaff.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Staff</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../profile/viewSupplier.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Supplier</span></a>
-                        </li>
                         <li><a class="d-flex align-items-center" href="../profile/viewCustomer.php"><i class="fa-solid fa-user"></i><span class="menu-item text-truncate" data-i18n="List">Customer</span></a>
                         </li>
                         <li><a class="d-flex align-items-center" href="../profile/viewPet.php"><i class="fa-solid fa-paw"></i><span class="menu-item text-truncate" data-i18n="Add">Pet</span></a>
                         </li>
+                        <li><a class="d-flex align-items-center" href="../profile/viewStaff.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Staff</span></a>
+                        </li>
+                        <li><a class="d-flex align-items-center" href="../profile/viewSupplier.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Supplier</span></a>
+                        </li>
+
 
                     </ul>
                 </li>
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
                 </li>
-                
+
 
                 <li class=" nav-item"><a class="d-flex align-items-center" href="../service/viewService.php"><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Categories">Services</span></a>
-                    
+
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="../appointment/viewAppointment.php"><i class="fa-solid fa-calendar-days"></i><span class="menu-title text-truncate" data-i18n="Product">Appointment</span></a>
 

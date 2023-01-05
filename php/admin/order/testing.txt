@@ -1,12 +1,5 @@
 Array
 (
-    [orderID] => Array
-        (
-        )
-
-    [query] => SELECT * FROM `order`
-    [result] => Array
-        (
-        )
-
+    [update_status] => Yes
+    [item_status] => 0
 )

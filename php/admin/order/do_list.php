@@ -1,10 +1,10 @@
 <?php include '../header.php';
 
-include 'connect.php';
+include '../../connect.php';
 
 // if (isset($_GET['delete'])) {
 //     $id = $_GET['delete'];
-//     mysqli_query($connect, "DELETE FROM inventory WHERE itemID=$id");
+//     mysqli_query($conn, "DELETE FROM inventory WHERE itemID=$id");
 //     unset($_GET['delete']);
 
 //     $_SESSION['message'] = "Record has been Deleted";
@@ -12,7 +12,7 @@ include 'connect.php';
 // }
 
 
-// $result = mysqli_query($connect, "SELECT * FROM inventory")
+// $result = mysqli_query($conn, "SELECT * FROM inventory")
 //     or die($mysqli->error);
 
 
@@ -115,7 +115,7 @@ function pre_r($array)
                                                     <?php
 
                                                     $i = 0;
-                                                    //  include 'connect.php';
+                                                    //  include '../../connect.php';
 
                                                     $sql = "SELECT * FROM `delivery_order` WHERE `status` = 1 ORDER BY `delivery_order`.`ID` DESC";
                                                     //  $quantity = "SELECT COUNT(`product`) AS total FROM `delivery_order_detail` WHERE `DID`";

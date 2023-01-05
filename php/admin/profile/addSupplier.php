@@ -8,8 +8,10 @@ if (isset($_POST['submit'])) {
     $contactNo = $_POST['contactNo'];
     $address = $_POST['address'];
 
-    mysqli_query($connect, "INSERT INTO supplier(supplierName,contactName,contactNo,address) VALUES('$supplierName','$contactName','$contactNo','$address')");
+    mysqli_query($conn, "INSERT INTO supplier(supplierName,contactName,contactNo,address) VALUES('$supplierName','$contactName','$contactNo','$address')");
 
+    echo '<script>alert("New Record has been Added")</script>';
+    echo "<script>window.location.assign('viewSupplier.php');</script>";
 ?><script>
         toastr['success']('New Record has been successfully added', 'Success!', {
             closeButton: true,
@@ -20,7 +22,7 @@ if (isset($_POST['submit'])) {
 <?php
     $fp = fopen("testing.txt", "w");
     $write["userID"] = $_POST;
-    $write["error"] = mysqli_error($connect);
+    $write["error"] = mysqli_error($conn);
     $write["query"] = "INSERT INTO `supplier`(supplierName,contactName,contactNo,address) VALUES('$supplierName',$contactName','$contactNo','$address')";
     fwrite($fp, print_r($write, true));
     fclose($fp);

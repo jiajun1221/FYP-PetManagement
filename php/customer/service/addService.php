@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $installDate = $_POST['installDate'];
     $totalPrice = $_POST['totalPrice'];
 
-    mysqli_query($connect, "INSERT INTO `order`(userID,purchaseDate,serviceDate,installDate,totalPrice) VALUES('$userID','$purchaseDate','$serviceDate','$installDate','$totalPrice')");
+    mysqli_query($conn, "INSERT INTO `order`(userID,purchaseDate,serviceDate,installDate,totalPrice) VALUES('$userID','$purchaseDate','$serviceDate','$installDate','$totalPrice')");
     $_SESSION['message'] = "Record has been Saved!";
     $_SESSION['msg_type'] = "Success";
 

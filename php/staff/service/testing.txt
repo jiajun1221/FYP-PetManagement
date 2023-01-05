@@ -1,13 +1,12 @@
 Array
 (
-    [result] => mysqli_result Object
+    [result] => Array
         (
-            [current_field] => 0
-            [field_count] => 5
-            [lengths] => 
-            [num_rows] => 1
-            [type] => 0
+            [servicePETID] => 8
+            [serviceType] => Hotel
+            [date] => 2023-01-07
+            [time] => 12:42
+            [submit] => 
         )
 
-    [query] => SELECT * FROM service WHERE serviceID='16'
 )
