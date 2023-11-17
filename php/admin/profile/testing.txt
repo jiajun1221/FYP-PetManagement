@@ -2,14 +2,14 @@ Array
 (
     [result] => Array
         (
-            [staffName] => ewv
+            [staffName] => JiaJun
             [gender] => Male
-            [contact] => 231233
-            [speciality] => Pet Hotel Management
-            [userEmail] => user123@gmail.com
-            [userName] => Rice
-            [password] => 12345
-            [cpassword] => 12345
+            [contact] => Swim
+            [skillset] => Active listening skills
+            [userEmail] => kevenchng1221@gmail.com
+            [userName] => JieJun
+            [password] => 
+            [cpassword] => 
             [submit] => 
         )
 

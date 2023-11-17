@@ -10,7 +10,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Pet Care Management</title>
+    <title>Complete Developer Network</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/img/icon1.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
@@ -97,52 +97,17 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <!-- <li class=" nav-item"><a class="d-flex align-items-center" href="../general/dashboard.php"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a> -->
+                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">General</span><i data-feather="more-horizontal"></i>
+                </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="../general/account.php"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="Account">Account</span></a>
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Chat">Profile</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../profile/viewCustomer.php"><i class="fa-solid fa-user"></i><span class="menu-item text-truncate" data-i18n="List">Customer</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../profile/viewPet.php"><i class="fa-solid fa-paw"></i><span class="menu-item text-truncate" data-i18n="Add">Pet</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../profile/viewStaff.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Staff</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../profile/viewSupplier.php"><i class="fa-solid fa-user-doctor"></i><span class="menu-item text-truncate" data-i18n="List">Supplier</span></a>
-                        </li>
-
-
-                    </ul>
+                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">User</span><i data-feather="more-horizontal"></i>
                 </li>
-                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../profile/addUser.php"><i class="fa-solid fa-plus"></i><span class="menu-title text-truncate" data-i18n="Chat">Add User</span></a>  
                 </li>
-
-
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../service/viewService.php"><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Categories">Services</span></a>
-
+                <li class=" nav-item"><a class="d-flex align-items-center" href="../profile/viewUser.php"><i class="fa-solid fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Chat">View User</span></a>  
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="../appointment/viewAppointment.php"><i class="fa-solid fa-calendar-days"></i><span class="menu-title text-truncate" data-i18n="Product">Appointment</span></a>
-
-                </li>
-
-
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-box-open"></i></i><span class="menu-title text-truncate" data-i18n="Todo">Inventory</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../inventory/inventory.php"><i data-feather="tag"></i><span class="menu-item text-truncate" data-i18n="List">Stock</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../inventory/category.php"><i data-feather="list"></i><span class="menu-item text-truncate" data-i18n="List">Category</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa-solid fa-clipboard-list"></i><span class="menu-title text-truncate" data-i18n="Todo">Order</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="../order/do_list.php"><i class="fa-solid fa-parachute-box"></i><span class="menu-item text-truncate" data-i18n="List">Delivery Order</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="../order/po_list.php"><i class="fa-solid fa-parachute-box"></i><span class="menu-item text-truncate" data-i18n="List">Purchase Order</span></a>
-                        </li>
-                    </ul>
-                </li>
-
+<br>
         </div>
     </div>
     <!-- END: Main Menu-->

@@ -1,0 +1,17 @@
+Array
+(
+    [result] => Array
+        (
+            [freelancerName] => Dave
+            [gender] => Male
+            [contact] => 0123456789
+            [hobby] => Hiking
+            [skillset] => Customer service skills
+            [userEmail] => dave@gmail.com
+            [userName] => Dave
+            [password] => 123456789
+            [cpassword] => 123456789
+            [submit] => 
+        )
+
+)
