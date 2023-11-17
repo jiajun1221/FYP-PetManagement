@@ -1,5 +1,0 @@
-Array
-(
-    [target_file] => ../../../app-assets/img/product/
-    [move_uploaded_file] => 
-)

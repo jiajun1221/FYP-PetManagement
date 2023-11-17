@@ -24,15 +24,16 @@ if (isset($_POST['submit'])) {
     $userEmail = $_POST['userEmail'];
     $password = $_POST['password'];
     $cpassword = $_POST["cpassword"];
-    $userGroup = "staff";
+    $userGroup = "freelancer";
     $password = base64_encode($password);
     $cpassword = base64_encode($cpassword);
 
-    $staffName = $_POST['staffName'];
+    $freelancerName = $_POST['freelancerName'];
     $gender = $_POST['gender'];
     $userEmail = $_POST['userEmail'];
     $contact = $_POST["contact"];
-    $speciality = $_POST["speciality"];
+    $hobby = $_POST["hobby"];
+    $skillset = $_POST["skillset"];
 
     mysqli_query($conn, "INSERT INTO user(userName,userEmail,password,userGroup) VALUES('$userName','$userEmail','$password','$userGroup')")
         or die($conn->error);
@@ -47,9 +48,10 @@ if (isset($_POST['submit'])) {
     $crow = mysqli_fetch_assoc($cid);
     $userID = $crow['userID'];
 
-    mysqli_query($conn, "INSERT INTO staff(staffName,userID,gender,email,contact,speciality) VALUES('$staffName','$userID','$gender','$userEmail','$contact','$speciality')")
+    mysqli_query($conn, "INSERT INTO freelancer(freelancerName,userID,gender,email,contact,hobby,skillset) VALUES('$freelancerName','$userID','$gender','$userEmail','$contact','$hobby','$skillset')")
         or die($conn->error);
-
+        echo '<script>alert("New Record has been Added")</script>';
+        echo "<script>window.location.assign('viewUser.php');</script>";
 
     if ($password == $cpassword) {
         $result = mysqli_query($conn, "SELECT * FROM user where publish = '1'");
@@ -112,6 +114,7 @@ if (isset($_POST['submit'])) {
             // $_SESSION["userName"] = $userName;
             // $_SESSION['userid'] = $userID;
             // header("Location: registerstaff.php");
+            
         }
     } else {
         ?>
@@ -125,7 +128,7 @@ if (isset($_POST['submit'])) {
 
 <?php
     }
-    header("Location: viewStaff.php");
+    header("Location: viewUser.php");
 }
 include '../header.php';
 
@@ -186,14 +189,14 @@ include '../header.php';
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Register Staff</h2>
+                        <h2 class="content-header-title float-left mb-0">Add User</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Profile</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Staff</a>
+                                <li class="breadcrumb-item"><a href="#">User</a>
                                 </li>
-                                <li class="breadcrumb-item active">Add Staff
+                                <li class="breadcrumb-item active">Add User
                                 </li>
                             </ol>
                         </div>
@@ -226,8 +229,8 @@ include '../header.php';
 
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="form-label" for="staffName">Full Name</label>
-                                                <input type="text" name="staffName" id="staffName" class="form-control" placeholder="Kevin" />
+                                                <label class="form-label" for="freelancerName">Full Name</label>
+                                                <input type="text" name="freelancerName" id="freelancerName" class="form-control" placeholder="Kevin" />
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label" for="gender">Gender</label>
@@ -250,14 +253,27 @@ include '../header.php';
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label class="form-label" for="speciality">Speciality</label>
-                                                <select class="select2 w-100" name="speciality" id="speciality" multiple>
-                                                    <option>Pet Grooming Servicing</option>
-                                                    <option>Pet Hotel Management</option>
-                                                    <option>Vet Doctoring</option>
+                                                <label class="form-label" for="hobby">Hobby</label>
+                                                <input type="text" name="hobby" id="hobby" class="form-control" placeholder="Swimming, Jogging, Hiking, .." />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                      
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="skillset">Skillset</label>
+                                                <select class="select2 w-100" name="skillset" id="skillset" multiple>
+                                                    <option>Active listening skills</option>
+                                                    <option>Communication skills</option>
+                                                    <option>Computer skills</option>
+                                                    <option>Customer service skills<option>
+                                                    <option>Interpersonal skills<option>
+                                                    <option>Leadership skills<option>
+                                                    <option>Management skills<option>
+                                                    <option>Problem-solving skills<option>
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="content-header"><br>
                                             <h5 class="mb-0">Account Details</h5>
                                             <small class="text-muted">Enter Your Account Details</small>

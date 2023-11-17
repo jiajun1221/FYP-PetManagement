@@ -1,6 +1,6 @@
 <?php
 
-include '../../connect.php';
+include 'connect.php';
 
 function sanitize_my_userEmail($field)
 {
@@ -24,15 +24,16 @@ if (isset($_POST['submit'])) {
     $userEmail = $_POST['userEmail'];
     $password = $_POST['password'];
     $cpassword = $_POST["cpassword"];
-    $userGroup = "staff";
+    $userGroup = "freelancer";
     $password = base64_encode($password);
     $cpassword = base64_encode($cpassword);
 
-    $staffName = $_POST['staffName'];
+    $freelancerName = $_POST['freelancerName'];
     $gender = $_POST['gender'];
     $userEmail = $_POST['userEmail'];
     $contact = $_POST["contact"];
-    $speciality = $_POST["speciality"];
+    $hobby = $_POST["hobby"];
+    $skillset = $_POST["skillset"];
 
     mysqli_query($conn, "INSERT INTO user(userName,userEmail,password,userGroup) VALUES('$userName','$userEmail','$password','$userGroup')")
         or die($conn->error);
@@ -47,11 +48,16 @@ if (isset($_POST['submit'])) {
     $crow = mysqli_fetch_assoc($cid);
     $userID = $crow['userID'];
 
-    mysqli_query($conn, "INSERT INTO staff(staffName,userID,gender,email,contact,speciality) VALUES('$staffName','$userID','$gender','$userEmail','$contact','$speciality')")
+    mysqli_query($conn, "INSERT INTO freelancer(freelancerName,userID,gender,email,contact,hobby,skillset) VALUES('$freelancerName','$userID','$gender','$userEmail','$contact','$hobby','$skillset')")
         or die($conn->error);
-        echo '<script>alert("New Record has been Added")</script>';
-        echo "<script>window.location.assign('viewStaff.php');</script>";
+        
+    echo "<script>";
+    echo "alert('Data Recorded');";
+    echo "window.location.assign('index.php');";
+    echo "</script>";
+        
 
+        
     if ($password == $cpassword) {
         $result = mysqli_query($conn, "SELECT * FROM user where publish = '1'");
 
@@ -59,7 +65,7 @@ if (isset($_POST['submit'])) {
             if ($row['userEmail'] == $userEmail) {
 ?>
 
-                <script src="../../js/jquery.min.js"></script>
+                <script src="../js/jquery.min.js"></script>
                 <script>
                     jQuery(document).ready(function() {
                         jQuery("#error").text("*User Email Already Exist. Please try again");
@@ -118,7 +124,7 @@ if (isset($_POST['submit'])) {
     } else {
         ?>
 
-        <script src="../../js/jquery.min.js"></script>
+        <script src="../js/jquery.min.js"></script>
         <script>
             jQuery(document).ready(function() {
                 jQuery("#error").text("*Your password is different with confirmed password");
@@ -127,9 +133,8 @@ if (isset($_POST['submit'])) {
 
 <?php
     }
-    header("Location: viewStaff.php");
+   
 }
-include '../header.php';
 
 ?>
 
@@ -144,35 +149,66 @@ include '../header.php';
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Form Wizard - Vuexy - Bootstrap HTML admin template</title>
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <title>Complete Developer Network</title>
+    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/img/icon1.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/wizard/bs-stepper.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
     <!-- END: Vendor CSS-->
 
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
+    <script src="../app-assets/js/scripts/forms/form-number-input.js"></script>
+    <script src="../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/form-validation.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/forms/form-wizard.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- END: Custom CSS-->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>Form Wizard - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/forms/wizard/bs-stepper.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/forms/select/select2.min.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/bordered-layout.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/forms/form-wizard.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <!-- END: Custom CSS-->
+
 
 </head>
 <!-- END: Head-->
@@ -180,7 +216,7 @@ include '../header.php';
 <!-- END: Main Menu-->
 
 <!-- BEGIN: Content-->
-<div class="app-content content ">
+<div class="app-content p-2 ">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper">
@@ -188,14 +224,10 @@ include '../header.php';
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Register Staff</h2>
+                        <h2 class="content-header-title float-left mb-0">Freelancer Info</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Profile</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">Staff</a>
-                                </li>
-                                <li class="breadcrumb-item active">Add Staff
+                                <li class="breadcrumb-item"><a href="index.html">Please Fill in your info</a>
                                 </li>
                             </ol>
                         </div>
@@ -204,19 +236,16 @@ include '../header.php';
             </div>
             <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
                 <div class="form-group breadcrumb-right">
-                    <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="app-todo.html"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-userEmail.html"><i class="mr-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="mr-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
-                    </div>
-                </div>
+                <a class="btn-icon btn btn-primary btn-round" href="authentication/authentication/login.php">Admin Login</a>
+
             </div>
         </div>
 
-        <div class="content-body">
+        <div class="col-12">
             <!-- Horizontal Wizard -->
             <section class="basic-horizontal-layouts">
                 <div class="row">
-                    <div class="content-header-left col-md-12 col-12 ">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <form method="post" form class="form form-horizontal" method="POST">
@@ -228,8 +257,8 @@ include '../header.php';
 
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="form-label" for="staffName">Full Name</label>
-                                                <input type="text" name="staffName" id="staffName" class="form-control" placeholder="Kevin" />
+                                                <label class="form-label" for="freelancerName">Full Name</label>
+                                                <input type="text" name="freelancerName" id="freelancerName" class="form-control" placeholder="Kevin" />
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="form-label" for="gender">Gender</label>
@@ -252,14 +281,26 @@ include '../header.php';
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label class="form-label" for="speciality">Speciality</label>
-                                                <select class="select2 w-100" name="speciality" id="speciality" multiple>
-                                                    <option>Pet Grooming Servicing</option>
-                                                    <option>Pet Hotel Management</option>
-                                                    <option>Vet Doctoring</option>
+                                                <label class="form-label" for="hobby">Hobby</label>
+                                                <input type="text" name="hobby" id="hobby" class="form-control" placeholder="Swimming, Jogging, Hiking, .." />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-label" for="skillset">Skillset</label>
+                                                <select class="select2 w-100" name="skillset" id="skillset" multiple>
+                                                    <option>Active listening skills</option>
+                                                    <option>Communication skills</option>
+                                                    <option>Computer skills</option>
+                                                    <option>Customer service skills<option>
+                                                    <option>Interpersonal skills<option>
+                                                    <option>Leadership skills<option>
+                                                    <option>Management skills<option>
+                                                    <option>Problem-solving skills<option>
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="content-header"><br>
                                             <h5 class="mb-0">Account Details</h5>
                                             <small class="text-muted">Enter Your Account Details</small>
@@ -313,22 +354,22 @@ include '../header.php';
 
 
 <!-- BEGIN: Vendor JS-->
-<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+<script src="../app-assets/vendors/js/vendors.min.js"></script>
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="../../../app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
-<script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
-<script src="../../../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+<script src="../app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+<script src="../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+<script src="../app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Theme JS-->
-<script src="../../../app-assets/js/core/app-menu.js"></script>
-<script src="../../../app-assets/js/core/app.js"></script>
+<script src="../app-assets/js/core/app-menu.js"></script>
+<script src="../app-assets/js/core/app.js"></script>
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
-<script src="../../../app-assets/js/scripts/forms/form-wizard.js"></script>
+<script src="../app-assets/js/scripts/forms/form-wizard.js"></script>
 <!-- END: Page JS-->
 
 <script>

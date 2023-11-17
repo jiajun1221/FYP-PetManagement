@@ -1,9 +1,0 @@
-Array
-(
-    [located_time] => Array
-        (
-            [0] => 10:00AM
-            [1] => 12:00PM
-        )
-
-)
